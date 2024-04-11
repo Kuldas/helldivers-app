@@ -5,6 +5,10 @@ const filePath = './data/stratagems.json';
 
 const stratagenName = document.getElementById('stratagem-name');
 const stratagenSeq = document.getElementById('stratagem-seq');
+const gameVersionDisplay = document.getElementById('game-version');
+const gameVersion = "0.1.0";
+
+gameVersionDisplay.textContent = gameVersion;
 
 let currentIndex = 0; // Definice proměnné currentIndex
 let gameSetup = {};
