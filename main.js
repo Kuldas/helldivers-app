@@ -1,7 +1,7 @@
 import './style.css';
 import { arrowIcon } from './assets/js/functions.js';
 
-const filePath = './assets/data/stratagems.json';
+const filePath = './public/data/stratagems.json';
 
 const stratagenName = document.getElementById('stratagem-name');
 const stratagenSeq = document.getElementById('stratagem-seq');
