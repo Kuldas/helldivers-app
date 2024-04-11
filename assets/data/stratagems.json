@@ -1,0 +1,42 @@
+{
+  "stratagems": [
+    {
+      "name": "Resupply",
+      "category": "mission",
+      "activation_sequence": ["ArrowDown", "ArrowDown", "ArrowUp", "ArrowRight"]
+    },
+    {
+      "name": "Reinforce",
+      "category": "mission",
+      "activation_sequence": [
+        "ArrowUp",
+        "ArrowDown",
+        "ArrowRight",
+        "ArrowLeft",
+        "ArrowUp"
+      ]
+    },
+    {
+      "name": "Railcannon Strike",
+      "category": "offensive",
+      "activation_sequence": [
+        "ArrowRight",
+        "ArrowDown",
+        "ArrowUp",
+        "ArrowDown",
+        "ArrowLeft"
+      ]
+    },
+    {
+      "name": "EAT-17 Expendable Anti-tank",
+      "category": "supply",
+      "activation_sequence": [
+        "ArrowDown",
+        "ArrowDown",
+        "ArrowLeft",
+        "ArrowUp",
+        "ArrowRight"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+  <body>
+    <main class="flex flex-col justify-center items-center gap-16 min-h-screen">
+      <h1 class="text-4xl">Stratagems Challange</h1>
+      <div id="game" class="card bg-primary-content shadow-xl">
+        <div id="stratagem-info" class="card-body justify-center">
+          <h2 id="stratagem-name" class="card-title justify-center"></h2>
+          <ul id="stratagem-seq" class="flex justify-center gap-2"></ul>
+          <div id="activation-console" class="card-actions text-center">
+            <p>používej šipky</p>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
