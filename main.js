@@ -16,7 +16,7 @@ let gameSetup = {};
 fetch(filePath)
   .then((response) => {
     if (!response.ok) {
-      throw new Error('Failed to load data');
+      throw new Error('Načítání dat selhalo');
     }
     return response.json();
   })
@@ -35,7 +35,7 @@ fetch(filePath)
     startGame(gameSetup); // Spustíme hru s výchozím nastavením
   })
   .catch((error) => {
-    console.error('Error loading data:', error);
+    console.error('Chyba při načítání dat:', error);
   });
 
 function startGame(gameSetup) {
@@ -71,13 +71,13 @@ function checkArrow(arrow, sequence) {
     currentListItem.classList.add('text-green-400'); // Přidání třídy pro zelenou barvu
     currentIndex++; // Přesun na další šipku v sekvenci
     if (currentIndex === sequence.length) {
-      console.log('Gratulujeme, úspěšně jste dokončili sekvenci!');
+      console.log('Gratuluji kadete, úspěšně sis zavolal stratagem! Asi nebudeš taková sračka.');
       // Zde můžete provést další akce po dokončení sekvence, např. získání bodů
       currentIndex = 0; // Resetovat index pro další použití
       changeStratagem(); // Změna stratagemu po dokončení sekvence
     }
   } else {
-    console.log('Špatná šipka!');
+    console.log('Špatná šipka! Začni makat ty sračko!');
   }
 }
 
