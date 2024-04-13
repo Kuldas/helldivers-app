@@ -1,42 +1,677 @@
 {
   "stratagems": [
-    {
-      "name": "Resupply",
-      "category": "mission",
-      "activation_sequence": ["ArrowDown", "ArrowDown", "ArrowUp", "ArrowRight"]
-    },
-    {
-      "name": "Reinforce",
-      "category": "mission",
-      "activation_sequence": [
-        "ArrowUp",
-        "ArrowDown",
-        "ArrowRight",
-        "ArrowLeft",
-        "ArrowUp"
-      ]
-    },
-    {
-      "name": "Railcannon Strike",
-      "category": "offensive",
-      "activation_sequence": [
-        "ArrowRight",
-        "ArrowDown",
-        "ArrowUp",
-        "ArrowDown",
-        "ArrowLeft"
-      ]
-    },
-    {
-      "name": "EAT-17 Expendable Anti-tank",
-      "category": "supply",
-      "activation_sequence": [
-        "ArrowDown",
-        "ArrowDown",
-        "ArrowLeft",
-        "ArrowUp",
-        "ArrowRight"
-      ]
-    }
+      {
+          "name": "Reinforce",
+          "category": "Mission",
+          "activation_sequence": [
+              "ArrowUp",
+              "ArrowDown",
+              "ArrowRight",
+              "ArrowLeft",
+              "ArrowUp"
+          ]
+      },
+      {
+          "name": "SOS Beacon",
+          "category": "Mission",
+          "activation_sequence": [
+              "ArrowUp",
+              "ArrowDown",
+              "ArrowRight",
+              "ArrowUp"
+          ]
+      },
+      {
+          "name": "Resupply",
+          "category": "Mission",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowRight"
+          ]
+      },
+      {
+          "name": "NUX-223 Hellbomb",
+          "category": "Mission",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowLeft",
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowRight",
+              "ArrowDown",
+              "ArrowUp"
+          ]
+      },
+      {
+          "name": "SSSD Delivery",
+          "category": "Mission",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowDown",
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowUp"
+          ]
+      },
+      {
+          "name": "Seismic Probe",
+          "category": "Mission",
+          "activation_sequence": [
+              "ArrowUp",
+              "ArrowUp",
+              "ArrowLeft",
+              "ArrowRight",
+              "ArrowDown",
+              "ArrowDown"
+          ]
+      },
+      {
+          "name": "Upload Data",
+          "category": "Mission",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowUp",
+              "ArrowUp"
+          ]
+      },
+      {
+          "name": "Eagle Rearm",
+          "category": "Mission",
+          "activation_sequence": [
+              "ArrowUp",
+              "ArrowUp",
+              "ArrowLeft",
+              "ArrowUp",
+              "ArrowRight"
+          ]
+      },
+      {
+          "name": "Illumination Flare",
+          "category": "Mission",
+          "activation_sequence": [
+              "ArrowRight",
+              "ArrowRight",
+              "ArrowLeft",
+              "ArrowLeft"
+          ]
+      },
+      {
+          "name": "SEAF Artillery",
+          "category": "Mission",
+          "activation_sequence": [
+              "ArrowRight",
+              "ArrowUp",
+              "ArrowUp",
+              "ArrowDown"
+          ]
+      },
+      {
+          "name": "Super Earth Flag",
+          "category": "Mission",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowDown",
+              "ArrowUp"
+          ]
+      },
+      {
+          "name": "MG-43 Machine Gun",
+          "category": "Supply - Support Weapons",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowLeft",
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowRight"
+          ]
+      },
+      {
+          "name": "APW-1 Anti-Materiel Rifle",
+          "category": "Supply - Support Weapons",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowLeft",
+              "ArrowRight",
+              "ArrowUp",
+              "ArrowDown"
+          ]
+      },
+      {
+          "name": "M-105 Stalwart",
+          "category": "Supply - Support Weapons",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowLeft",
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowUp",
+              "ArrowLeft"
+          ]
+      },
+      {
+          "name": "EAT-17 Expendable Anti-tank",
+          "category": "Supply - Support Weapons",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowDown",
+              "ArrowLeft",
+              "ArrowUp",
+              "ArrowRight"
+          ]
+      },
+      {
+          "name": "GR-8 Recoilless Rifle",
+          "category": "Supply - Support Weapons",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowLeft",
+              "ArrowRight",
+              "ArrowRight",
+              "ArrowLeft"
+          ]
+      },
+      {
+          "name": "FLAM-40 Flamethrower",
+          "category": "Supply - Support Weapons",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowLeft",
+              "ArrowUp",
+              "ArrowDown",
+              "ArrowUp"
+          ]
+      },
+      {
+          "name": "AC-8 Autocannon",
+          "category": "Supply - Support Weapons",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowLeft",
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowUp",
+              "ArrowRight"
+          ]
+      },
+      {
+          "name": "MG-206 Heavy Machine Gun",
+          "category": "Supply - Support Weapons",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowLeft",
+              "ArrowUp",
+              "ArrowDown",
+              "ArrowDown"
+          ]
+      },
+      {
+          "name": "RS-442 Railgun",
+          "category": "Supply - Support Weapons",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowRight",
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowLeft",
+              "ArrowRight"
+          ]
+      },
+      {
+          "name": "FAF-14 SPEAR Launcher",
+          "category": "Supply - Support Weapons",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowDown",
+              "ArrowDown"
+          ]
+      },
+      {
+          "name": "GL-21 Grenade Launcher",
+          "category": "Supply - Support Weapons",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowLeft",
+              "ArrowUp",
+              "ArrowLeft",
+              "ArrowDown"
+          ]
+      },
+      {
+          "name": "LAS-98 Laser Cannon",
+          "category": "Supply - Support Weapons",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowLeft",
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowLeft"
+          ]
+      },
+      {
+          "name": "ARC-3 Arc Thrower",
+          "category": "Supply - Support Weapons",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowRight",
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowLeft",
+              "ArrowLeft"
+          ]
+      },
+      {
+          "name": "LAS-99 Quasar Cannon",
+          "category": "Supply - Support Weapons",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowLeft",
+              "ArrowRight"
+          ]
+      },
+      {
+          "name": "EXO-45 Patriot Exosuit",
+          "category": "Supply - Other",
+          "activation_sequence": [
+              "ArrowLeft",
+              "ArrowDown",
+              "ArrowRight",
+              "ArrowUp",
+              "ArrowLeft",
+              "ArrowDown",
+              "ArrowDown"
+          ]
+      },
+      {
+          "name": "Orbital Gatling Barrage",
+          "category": "Offensive - Orbital",
+          "activation_sequence": [
+              "ArrowRight",
+              "ArrowDown",
+              "ArrowLeft",
+              "ArrowUp",
+              "ArrowUp"
+          ]
+      },
+      {
+          "name": "Orbital Airburst Strike",
+          "category": "Offensive - Orbital",
+          "activation_sequence": [
+              "ArrowRight",
+              "ArrowRight",
+              "ArrowRight"
+          ]
+      },
+      {
+          "name": "Orbital 120MM HE Barrage",
+          "category": "Offensive - Orbital",
+          "activation_sequence": [
+              "ArrowRight",
+              "ArrowRight",
+              "ArrowDown",
+              "ArrowLeft",
+              "ArrowRight",
+              "ArrowDown"
+          ]
+      },
+      {
+          "name": "Orbital 380MM HE Barrage",
+          "category": "Offensive - Orbital",
+          "activation_sequence": [
+              "ArrowRight",
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowUp",
+              "ArrowLeft",
+              "ArrowDown",
+              "ArrowDown"
+          ]
+      },
+      {
+          "name": "Orbital Walking Barrage",
+          "category": "Offensive - Orbital",
+          "activation_sequence": [
+              "ArrowRight",
+              "ArrowDown",
+              "ArrowRight",
+              "ArrowDown",
+              "ArrowRight",
+              "ArrowDown"
+          ]
+      },
+      {
+          "name": "Orbital Lasers",
+          "category": "Offensive - Orbital",
+          "activation_sequence": [
+              "ArrowRight",
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowRight",
+              "ArrowDown"
+          ]
+      },
+      {
+          "name": "Orbital Railcannon Strike",
+          "category": "Offensive - Orbital",
+          "activation_sequence": [
+              "ArrowRight",
+              "ArrowUp",
+              "ArrowDown",
+              "ArrowDown",
+              "ArrowRight"
+          ]
+      },
+      {
+          "name": "Orbital Precision Strike",
+          "category": "Offensive - Orbital",
+          "activation_sequence": [
+              "ArrowRight",
+              "ArrowRight",
+              "ArrowUp"
+          ]
+      },
+      {
+          "name": "Orbital Gas Strike",
+          "category": "Offensive - Orbital",
+          "activation_sequence": [
+              "ArrowRight",
+              "ArrowRight",
+              "ArrowDown",
+              "ArrowRight"
+          ]
+      },
+      {
+          "name": "Orbital EMS Strike",
+          "category": "Offensive - Orbital",
+          "activation_sequence": [
+              "ArrowRight",
+              "ArrowRight",
+              "ArrowLeft",
+              "ArrowDown"
+          ]
+      },
+      {
+          "name": "Orbital Smoke Strike",
+          "category": "Offensive - Orbital",
+          "activation_sequence": [
+              "ArrowRight",
+              "ArrowRight",
+              "ArrowDown",
+              "ArrowUp"
+          ]
+      },
+      {
+          "name": "Eagle Strafing Run",
+          "category": "Offensive - Eagle",
+          "activation_sequence": [
+              "ArrowUp",
+              "ArrowRight",
+              "ArrowRight"
+          ]
+      },
+      {
+          "name": "Eagle Airstrike",
+          "category": "Offensive - Eagle",
+          "activation_sequence": [
+              "ArrowUp",
+              "ArrowRight",
+              "ArrowDown",
+              "ArrowRight"
+          ]
+      },
+      {
+          "name": "Eagle Cluster Bomb",
+          "category": "Offensive - Eagle",
+          "activation_sequence": [
+              "ArrowUp",
+              "ArrowRight",
+              "ArrowDown",
+              "ArrowDown",
+              "ArrowRight"
+          ]
+      },
+      {
+          "name": "Eagle Napalm Airstrike",
+          "category": "Offensive - Eagle",
+          "activation_sequence": [
+              "ArrowUp",
+              "ArrowRight",
+              "ArrowDown",
+              "ArrowUp"
+          ]
+      },
+      {
+          "name": "Eagle Smoke Strike",
+          "category": "Offensive - Eagle",
+          "activation_sequence": [
+              "ArrowUp",
+              "ArrowRight",
+              "ArrowUp",
+              "ArrowDown"
+          ]
+      },
+      {
+          "name": "Eagle 110MM Rocket Pods",
+          "category": "Offensive - Eagle",
+          "activation_sequence": [
+              "ArrowUp",
+              "ArrowRight",
+              "ArrowUp",
+              "ArrowLeft"
+          ]
+      },
+      {
+          "name": "Eagle 500KG Bomb",
+          "category": "Offensive - Eagle",
+          "activation_sequence": [
+              "ArrowUp",
+              "ArrowRight",
+              "ArrowDown",
+              "ArrowDown",
+              "ArrowDown"
+          ]
+      },
+      {
+          "name": "E/MG-101 HMG Emplacement",
+          "category": "Defensive",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowLeft",
+              "ArrowRight",
+              "ArrowRight",
+              "ArrowLeft"
+          ]
+      },
+      {
+          "name": "FX-12 Shield Generator Relay",
+          "category": "Defensive",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowDown",
+              "ArrowLeft",
+              "ArrowRight",
+              "ArrowLeft",
+              "ArrowRight"
+          ]
+      },
+      {
+          "name": "A/ARC-3 Tesla Tower",
+          "category": "Defensive",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowRight",
+              "ArrowUp",
+              "ArrowLeft",
+              "ArrowRight"
+          ]
+      },
+      {
+          "name": "MD-6 Anti-Personnel Minefield",
+          "category": "Defensive",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowLeft",
+              "ArrowUp",
+              "ArrowRight"
+          ]
+      },
+      {
+          "name": "MD-l4 Incendiary Mines",
+          "category": "Defensive",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowLeft",
+              "ArrowLeft",
+              "ArrowDown"
+          ]
+      },
+      {
+          "name": "A/MG-43 Machine Gun Sentry",
+          "category": "Defensive",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowRight",
+              "ArrowRight",
+              "ArrowUp"
+          ]
+      },
+      {
+          "name": "A/G-16 Gatling Sentry",
+          "category": "Defensive",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowRight",
+              "ArrowLeft"
+          ]
+      },
+      {
+          "name": "A/M-12 Mortar Sentry",
+          "category": "Defensive",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowRight",
+              "ArrowRight",
+              "ArrowDown"
+          ]
+      },
+      {
+          "name": "A/AC-8 Autocannon Sentry",
+          "category": "Defensive",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowRight",
+              "ArrowUp",
+              "ArrowLeft",
+              "ArrowUp"
+          ]
+      },
+      {
+          "name": "A/MLS-4X Rocket Sentry",
+          "category": "Defensive",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowRight",
+              "ArrowRight",
+              "ArrowLeft"
+          ]
+      },
+      {
+          "name": "A/M-23 EMS Mortar Sentry",
+          "category": "Defensive",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowRight",
+              "ArrowDown",
+              "ArrowRight"
+          ]
+      },
+      {
+          "name": "LIFT-850 Jump Pack",
+          "category": "Supply - Backpacks",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowUp",
+              "ArrowDown",
+              "ArrowUp"
+          ]
+      },
+      {
+          "name": "B-1 Supply Pack",
+          "category": "Supply - Backpacks",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowLeft",
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowUp",
+              "ArrowDown"
+          ]
+      },
+      {
+          "name": "AX/LAS-5 'Guard Dog' Rover",
+          "category": "Supply - Backpacks",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowLeft",
+              "ArrowUp",
+              "ArrowRight",
+              "ArrowRight"
+          ]
+      },
+      {
+          "name": "SH-20 Ballistic Shield Backpack",
+          "category": "Supply - Backpacks",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowLeft",
+              "ArrowDown",
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowLeft"
+          ]
+      },
+      {
+          "name": "SH-32 Shield Generator Pack",
+          "category": "Supply - Backpacks",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowLeft",
+              "ArrowRight",
+              "ArrowLeft",
+              "ArrowRight"
+          ]
+      },
+      {
+          "name": "AX/AR-23 'Guard Dog'",
+          "category": "Supply - Backpacks",
+          "activation_sequence": [
+              "ArrowDown",
+              "ArrowUp",
+              "ArrowLeft",
+              "ArrowUp",
+              "ArrowRight",
+              "ArrowDown"
+          ]
+      }
   ]
 }
