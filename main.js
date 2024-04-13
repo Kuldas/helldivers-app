@@ -1,19 +1,33 @@
+/*
+Importy
+*/
 import './style.css';
 import { arrowIcon } from './assets/js/functions.js';
+import { version } from './package.json';
 
-const filePath = './data/stratagems.json';
-
-const stratagenName = document.getElementById('stratagem-name');
-const stratagenSeq = document.getElementById('stratagem-seq');
+/* 
+Promněné
+*/
+const stratagemsDataPath = './data/stratagems.json';	// Cesta ke Stratagem datům
+const stratagenName = document.getElementById('stratagem-name');	// Získání elementu pro jméno stratagemu
+const stratagenSeq = document.getElementById('stratagem-seq');	
 const gameVersionDisplay = document.getElementById('game-version');
-const gameVersion = "0.1.0";
+const isMobileDevice = /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
 
-gameVersionDisplay.textContent = gameVersion;
+// Nastavení hry
+let currentIndex = 0;	// Definice proměnné currentIndex
+let gameSetup = {};		// Výchozí nastavení hry (prázdné)
+let gameTimerStart = 10;	// Výchozí čas pro časovač
 
-let currentIndex = 0; // Definice proměnné currentIndex
-let gameSetup = {};
+/*
+  HRA
+*/
 
-fetch(filePath)
+// Vrací verzi hry pro zobrazení na frontendu
+gameVersionDisplay.textContent = "v" + version;
+
+// Získání dat z JSON a přidání do gameSetup
+fetch(stratagemsDataPath)
   .then((response) => {
     if (!response.ok) {
       throw new Error('Načítání dat selhalo');
@@ -22,20 +36,19 @@ fetch(filePath)
   })
   .then((data) => {
     const stratagemsData = data;
-    // Zde můžete provést jakoukoliv manipulaci s proměnnou stratagemsData
-    console.log('Data:', stratagemsData); // nebo provedete jakoukoliv další manipulaci s daty
+    console.log('Data z JSON:', stratagemsData);	// Zobrazení dat v konzoli (pro vývoj)
 
     gameSetup = {
       stratagems: stratagemsData.stratagems,
       currentStratagem: [],
-      captured: null,
-      gameTimerStart: 10,
+      gameTimerStart
     };
-    console.log('Výchozí stav hry:', gameSetup);
-    startGame(gameSetup); // Spustíme hru s výchozím nastavením
+    console.log('Výchozí stav hry:', gameSetup);	// Zobrazení výchozího nastavení hry v konzoli (pro vývoj)
+
+    startGame(gameSetup);	// Spuštění hry s výchozím nastavením
   })
   .catch((error) => {
-    console.error('Chyba při načítání dat:', error);
+    console.error('Chyba při načítání dat:', error);	// Odchycení chyby při načítání dat
   });
 
 function startGame(gameSetup) {
@@ -55,6 +68,7 @@ function startGame(gameSetup) {
   });
 
   document.addEventListener('keydown', (event) => {
+	event.preventDefault();
     const arrowPressed = event.key;
 
     // Pokud uživatel stiskl klávesu, zkontrolujeme, zda je to správná šipka
@@ -67,14 +81,15 @@ function checkArrow(arrow, sequence) {
   const currentListItem = document.getElementById('index-' + currentIndex);
 
   if (arrow === currentArrow) {
-    console.log('Správná šipka!');
-    currentListItem.classList.add('text-green-400'); // Přidání třídy pro zelenou barvu
-    currentIndex++; // Přesun na další šipku v sekvenci
+	  currentListItem.classList.add('text-green-400'); // Přidání třídy pro zelenou barvu
+	  currentIndex++; // Přesun na další šipku v sekvenci
+
+	  console.log('Správná šipka!');
     if (currentIndex === sequence.length) {
       console.log('Gratuluji kadete, úspěšně sis zavolal stratagem! Asi nebudeš taková sračka.');
       // Zde můžete provést další akce po dokončení sekvence, např. získání bodů
       currentIndex = 0; // Resetovat index pro další použití
-      changeStratagem(); // Změna stratagemu po dokončení sekvence
+      setTimeout(changeStratagem, 250); // Změna stratagemu po dokončení sekvence
     }
   } else {
     console.log('Špatná šipka! Začni makat ty sračko!');
@@ -99,8 +114,17 @@ function changeStratagem() {
     listItem.setAttribute('id', 'index-' + index);
     stratagenSeq.appendChild(listItem);
   });
+
+  console.log("Nový náhodný stratagem:", gameSetup.currentStratagem)
 }
 
 function randChoice(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
+}
+
+
+if (isMobileDevice) {
+  console.log("Uživatel používá mobilní zařízení.");
+} else {
+  console.log("Uživatel používá počítač.");
 }
