@@ -67,6 +67,8 @@ function startGame(gameSetup) {
     stratagenSeq.appendChild(listItem);
   });
 
+  startCountdown(gameSetup.gameTimerStart);
+
   document.addEventListener('keydown', (event) => {
 	event.preventDefault();
     const arrowPressed = event.key;
@@ -114,8 +116,8 @@ function changeStratagem() {
     listItem.setAttribute('id', 'index-' + index);
     stratagenSeq.appendChild(listItem);
   });
-
-  console.log("Nový náhodný stratagem:", gameSetup.currentStratagem)
+  console.log("Stav hry po vybrání náhodného stratagemu:", gameSetup);
+  console.log("Nový náhodný stratagem:", gameSetup.currentStratagem);
 }
 
 function randChoice(arr) {
@@ -124,7 +126,41 @@ function randChoice(arr) {
 
 
 if (isMobileDevice) {
+  const mobileControl = document.getElementById("mobileControl");
+
+  mobileControl.classList.toggle("hidden")
   console.log("Uživatel používá mobilní zařízení.");
 } else {
   console.log("Uživatel používá počítač.");
 }
+
+// Funkce pro spuštění odpočítávače
+function startCountdown(duration) {
+  let startTime;
+  let progressBar = document.getElementById('countdown');
+
+  function animate(currentTime) {
+    if (!startTime) startTime = currentTime;
+    const elapsedTime = currentTime - startTime;
+    const progress = 1 - (elapsedTime / (duration * 1000)); // Plynulý pohyb progress baru
+    progressBar.value = Math.max(0, progress) * 100;
+
+    if (progress > 0) {
+      requestAnimationFrame(animate);
+    } else {
+      progressBar.value = 0; // Nastavení na 0% po vypršení času
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+document.querySelectorAll('.kbd').forEach(function(button) {
+  button.addEventListener('click', function() {
+    var direction = this.getAttribute('data-direction');
+    var event = new KeyboardEvent('keydown', {
+      key: direction,
+      bubbles: true
+    });
+    document.dispatchEvent(event);
+  });
+});
