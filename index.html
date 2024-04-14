@@ -9,10 +9,10 @@
   <body class="flex flex-col min-h-screen">
     <header class="navbar bg-base-100">
       <div class="flex-1">
-        <a class="btn btn-ghost text-xl">StratHell App</a>
+        <a href="/" class="btn btn-ghost text-xl">StratHell App</a>
       </div>
-      <div class="flex-none gap-2">
-        <span id="game-version"></span>
+      <div class="flex-none gap-4">
+        <span id="game-version" class="text-xs"></span>
         <label class="swap swap-rotate">
           <!-- this hidden checkbox controls the state -->
           <input type="checkbox" class="theme-controller" value="synthwave" />
@@ -23,17 +23,32 @@
         </label>
     </div>
     </header>
-    <main class="flex flex-col items-center gap-16 grow">
-      <article class="">
-        <h1 class="text-4xl">Stratagems Challange</h1>
-        <p class="">natrénuj stratagemy ať nejsi ve hře k hovnu!</p>
-      </article>
-      <div id="game" class="card w-1/2 min-w-max bg-primary-content shadow-xl">
-        <div id="stratagem-info" class="card-body justify-center">
-          <h2 id="stratagem-name" class="card-title justify-center"></h2>
-          <ul id="stratagem-seq" class="flex justify-center gap-2 text-green-400"></ul>
+    <main class="gap-12 grow">
+      <section>
+        <article class="">
+          <h1 class="text-4xl">Stratagems Challange</h1>
+          <p class="">natrénuj stratagemy ať nejsi ve hře k hovnu!</p>
+        </article>
+        <div id="game" class="card w-1/2 min-w-max bg-primary-content shadow-xl">
+          <div id="stratagem-info" class="card-body justify-center">
+            <h2 id="stratagem-name" class="card-title justify-center"></h2>
+            <ul id="stratagem-seq" class="flex justify-center gap-2"></ul>
+          </div>
         </div>
-      </div>
+        <progress id="countdown" class="progress w-56" value="100" max="100"></progress>
+      </section>
+      <section id="mobileControl" class="hidden">
+        <div class="flex justify-center w-full">
+          <kbd class="kbd" data-direction="ArrowUp">▲</kbd>
+        </div>
+        <div class="flex justify-center gap-12 w-full">
+          <kbd class="kbd" data-direction="ArrowLeft">◀︎</kbd>
+          <kbd class="kbd" data-direction="ArrowRight">▶︎</kbd>
+        </div>
+        <div class="flex justify-center w-full">
+          <kbd class="kbd" data-direction="ArrowDown">▼</kbd>
+        </div>
+      </section>
     </main>
 <footer class="footer items-center p-4 bg-neutral text-neutral-content">
   <aside class="items-center grid-flow-col">
