@@ -1,3 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    /* changa-regular - latin_latin-ext */
+    @font-face {
+        font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+        font-family: 'Changa';
+        font-style: normal;
+        font-weight: 400;
+        src: url('./fonts/changa/changa-v27-latin_latin-ext-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    }
+    /* changa-500 - latin_latin-ext */
+    @font-face {
+        font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+        font-family: 'Changa';
+        font-style: normal;
+        font-weight: 500;
+        src: url('./fonts/changa/changa-v27-latin_latin-ext-500.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    }
+    /* changa-700 - latin_latin-ext */
+    @font-face {
+        font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+        font-family: 'Changa';
+        font-style: normal;
+        font-weight: 700;
+        src: url('./fonts/changa/changa-v27-latin_latin-ext-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    }
+}
+
+@layer components {
+    .bg-image {
+        background: url("https://res.cloudinary.com/kuldas/image/upload/v1713185489/dev/helldivers/helldivers-wallpaper_i89xe9.jpg"), rgba(0,0,0, 0.8);
+        background-size: cover;
+        background-blend-mode: overlay;
+        background-position: top;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+    }
+}
