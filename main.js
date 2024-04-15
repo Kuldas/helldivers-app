@@ -1,18 +1,18 @@
 /*
-Importy
+  Importy
 */
 import './style.css';
 import { arrowIcon } from './assets/js/functions.js';
 import { version } from './package.json';
 
 /* 
-Promněné
+  Promněné
 */
 const stratagemsDataPath = './data/stratagems.json';	// Cesta ke Stratagem datům
 const stratagenName = document.getElementById('stratagem-name');	// Získání elementu pro jméno stratagemu
-const stratagenSeq = document.getElementById('stratagem-seq');	
-const gameVersionDisplay = document.getElementById('game-version');
-const isMobileDevice = /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
+const stratagenSeq = document.getElementById('stratagem-seq');  // Získání elementu pro aktivační sekvenci stratagemu
+const gameVersionDisplay = document.getElementById('game-version');  // Získání elementu pro verzi hry
+const isMobileDevice = /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);  // Promněná, která kontroluje zda je uživatel na mobilu
 
 // Nastavení hry
 let currentIndex = 0;	// Definice proměnné currentIndex
@@ -70,11 +70,14 @@ function startGame(gameSetup) {
   startCountdown(gameSetup.gameTimerStart);
 
   document.addEventListener('keydown', (event) => {
-	event.preventDefault();
+    const arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
     const arrowPressed = event.key;
 
     // Pokud uživatel stiskl klávesu, zkontrolujeme, zda je to správná šipka
-    checkArrow(arrowPressed, gameSetup.currentStratagem.activation_sequence);
+    if (arrowKeys.includes(arrowPressed)) {
+      event.preventDefault();
+      checkArrow(arrowPressed, gameSetup.currentStratagem.activation_sequence);
+    }
   });
 }
 
