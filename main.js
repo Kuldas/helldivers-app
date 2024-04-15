@@ -84,16 +84,27 @@ function checkArrow(arrow, sequence) {
 
   if (arrow === currentArrow) {
 	  currentListItem.classList.add('text-green-400'); // Přidání třídy pro zelenou barvu
+
 	  currentIndex++; // Přesun na další šipku v sekvenci
 
 	  console.log('Správná šipka!');
+
     if (currentIndex === sequence.length) {
       console.log('Gratuluji kadete, úspěšně sis zavolal stratagem! Asi nebudeš taková sračka.');
-      // Zde můžete provést další akce po dokončení sekvence, např. získání bodů
+
       currentIndex = 0; // Resetovat index pro další použití
+
       setTimeout(changeStratagem, 250); // Změna stratagemu po dokončení sekvence
     }
+    
   } else {
+    stratagenSeq.classList.toggle("animate__headShake");
+
+    // Po určité době (500ms) se odeberte třída "animate__headShake", aby se animace mohla opakovat
+    setTimeout(function() {
+      stratagenSeq.classList.remove('animate__headShake');
+    }, 500);
+
     console.log('Špatná šipka! Začni makat ty sračko!');
   }
 }
