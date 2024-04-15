@@ -12,12 +12,16 @@ const stratagemsDataPath = './data/stratagems.json';	// Cesta ke Stratagem datů
 const stratagenName = document.getElementById('stratagem-name');	// Získání elementu pro jméno stratagemu
 const stratagenSeq = document.getElementById('stratagem-seq');  // Získání elementu pro aktivační sekvenci stratagemu
 const gameVersionDisplay = document.getElementById('game-version');  // Získání elementu pro verzi hry
+const playerScoreDisplay = document.getElementById('playerScore'); // Získání elementu pro skóre hráče
 const isMobileDevice = /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);  // Promněná, která kontroluje zda je uživatel na mobilu
 
 // Nastavení hry
-let currentIndex = 0;	// Definice proměnné currentIndex
-let gameSetup = {};		// Výchozí nastavení hry (prázdné)
-let gameTimerStart = 10;	// Výchozí čas pro časovač
+let currentIndex = 0;  // Definice proměnné currentIndex
+let gameSetup = {};  // Výchozí nastavení hry (prázdné)
+let gameTimerStart = 10;  // Výchozí čas pro časovač
+let playerScore = 0;  // Výchozí skóre hráče
+let addArrowPoints = 5;  // Počet bodů za správnou šipku v sekvenci
+let addSeqPoints = 10;  // Počet bodů za dokončení sekvence stratagemu
 
 /*
   HRA
@@ -41,7 +45,8 @@ fetch(stratagemsDataPath)
     gameSetup = {
       stratagems: stratagemsData.stratagems,
       currentStratagem: [],
-      gameTimerStart
+      gameTimerStart,
+      playerScore
     };
     console.log('Výchozí stav hry:', gameSetup);	// Zobrazení výchozího nastavení hry v konzoli (pro vývoj)
 
@@ -89,12 +94,18 @@ function checkArrow(arrow, sequence) {
 	  currentListItem.classList.add('text-green-400'); // Přidání třídy pro zelenou barvu
 
 	  currentIndex++; // Přesun na další šipku v sekvenci
+    gameSetup.playerScore = gameSetup.playerScore + addArrowPoints;
+    
+    playerScoreDisplay.textContent = gameSetup.playerScore;
 
+    console.log(gameSetup.playerScore);
 	  console.log('Správná šipka!');
 
     if (currentIndex === sequence.length) {
       console.log('Gratuluji kadete, úspěšně sis zavolal stratagem! Asi nebudeš taková sračka.');
 
+      gameSetup.playerScore = gameSetup.playerScore + addSeqPoints;
+      playerScoreDisplay.textContent = gameSetup.playerScore;
       currentIndex = 0; // Resetovat index pro další použití
 
       setTimeout(changeStratagem, 250); // Změna stratagemu po dokončení sekvence
