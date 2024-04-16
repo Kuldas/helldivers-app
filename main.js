@@ -1,9 +1,9 @@
 /*
   Importy
 */
-import './style.css';
-import { arrowIcon } from './assets/js/functions.js';
-import { version } from './package.json';
+import './style.css';  // Import stylů
+import { arrowIcon } from './assets/js/functions.js';  // Import funkcí
+import { version } from './package.json';  // Import verze hry
 
 /* 
   Promněné
@@ -12,16 +12,18 @@ const stratagemsDataPath = './data/stratagems.json';	// Cesta ke Stratagem datů
 const stratagenName = document.getElementById('stratagem-name');	// Získání elementu pro jméno stratagemu
 const stratagenSeq = document.getElementById('stratagem-seq');  // Získání elementu pro aktivační sekvenci stratagemu
 const gameVersionDisplay = document.getElementById('game-version');  // Získání elementu pro verzi hry
-const playerScoreDisplay = document.getElementById('playerScore'); // Získání elementu pro skóre hráče
+const playerScoreDisplay = document.getElementById('player-score'); // Získání elementu pro skóre hráče
 const isMobileDevice = /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);  // Promněná, která kontroluje zda je uživatel na mobilu
 
 // Nastavení hry
 let currentIndex = 0;  // Definice proměnné currentIndex
 let gameSetup = {};  // Výchozí nastavení hry (prázdné)
-let gameTimerStart = 10;  // Výchozí čas pro časovač
+let gameTimerStart = 10;  // Výchozí čas pro odpočítávač (v sec)
 let playerScore = 0;  // Výchozí skóre hráče
 let arrowPoints = 5;  // Počet bodů za správnou šipku v sekvenci
 let seqPoints = 10;  // Počet bodů za dokončení sekvence stratagemu
+let gameStarted = false; // Indikátor, zda byla hra spuštěna
+let gameEnded = false; // Indikátor, zda byla hra ukončena
 
 /*
   HRA
@@ -45,7 +47,7 @@ fetch(stratagemsDataPath)
     gameSetup = {
       stratagems: stratagemsData.stratagems,
       currentStratagem: [],
-      gameTimerStart,
+      gameStarted,
       playerScore
     };
     console.log('Výchozí stav hry:', gameSetup);	// Zobrazení výchozího nastavení hry v konzoli (pro vývoj)
@@ -72,18 +74,27 @@ function startGame(gameSetup) {
     stratagenSeq.appendChild(listItem);
   });
 
-  startCountdown(gameSetup.gameTimerStart);
+  playerScoreDisplay.textContent = gameSetup.playerScore;
 
-  document.addEventListener('keyup', (event) => {
-    const arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
-    const arrowPressed = event.key;
+  // Přidání nového event listeneru na dokument
+  document.addEventListener('keyup', keyUpHandler);
+}
 
-    // Pokud uživatel stiskl klávesu, zkontrolujeme, zda je to správná šipka
-    if (arrowKeys.includes(arrowPressed)) {
-      event.preventDefault();
-      checkArrow(arrowPressed, gameSetup.currentStratagem.activation_sequence);
+function keyUpHandler(event) {
+  if (gameEnded) return;
+
+  const arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+  const arrowPressed = event.key;
+
+  // Pokud uživatel stiskl klávesu, zkontrolujeme, zda je to správná šipka
+  if (arrowKeys.includes(arrowPressed)) {
+    event.preventDefault();
+    if (!gameSetup.gameStarted) {
+      startCountdown(gameTimerStart);
+      gameSetup.gameStarted = true;
     }
-  });
+    checkArrow(arrowPressed, gameSetup.currentStratagem.activation_sequence);
+  }
 }
 
 function checkArrow(arrow, sequence) {
@@ -145,7 +156,7 @@ function changeStratagem() {
     stratagenSeq.appendChild(listItem);
   });
   console.log("Stav hry po vybrání náhodného stratagemu:", gameSetup);
-  console.log("Nový náhodný stratagem:", gameSetup.currentStratagem);
+  console.log("Nový náhodný stratagem:", gameSetup.currentStratagem.name);
 }
 
 function randChoice(arr) {
@@ -160,6 +171,43 @@ if (isMobileDevice) {
   console.log("Uživatel používá mobilní zařízení.");
 } else {
   console.log("Uživatel používá počítač.");
+}
+
+function gameRestart() {
+  // Odstranit existující event listener, pokud existuje
+  document.removeEventListener('keyup', keyUpHandler);
+  resetGameSetup();
+  let progressBar = document.getElementById('countdown');
+  progressBar.value = 100; // Nastavení hodnoty progress baru na 100%
+  startGame(gameSetup);
+
+  console.log("Stav hry po resetu:", gameSetup)
+}
+
+function resetGameSetup() {
+  gameSetup.currentStratagem = [];
+  gameSetup.gameStarted = false;
+  gameSetup.playerScore = 0;
+  currentIndex = 0;
+  gameEnded = false;
+
+}
+
+function gameOver() {
+  const listItem = document.createElement('li');
+  const restartButton = document.createElement('button');
+
+  stratagenName.textContent = "Konec hry";
+
+  stratagenSeq.innerHTML = ''; // Vyprázdnění seznamu před přidáním nových šipek
+  restartButton.textContent = 'Restart';
+  restartButton.addEventListener('click', gameRestart);
+  listItem.appendChild(restartButton)
+  stratagenSeq.appendChild(listItem);
+
+  gameEnded = true; // Nastavení stavu hry na ukončený
+
+  console.log("Konečný stav hry:", gameSetup)
 }
 
 // Funkce pro spuštění odpočítávače
@@ -177,6 +225,7 @@ function startCountdown(duration) {
       requestAnimationFrame(animate);
     } else {
       progressBar.value = 0; // Nastavení na 0% po vypršení času
+      gameOver();
     }
   }
 
