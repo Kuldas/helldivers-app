@@ -20,8 +20,8 @@ let currentIndex = 0;  // Definice proměnné currentIndex
 let gameSetup = {};  // Výchozí nastavení hry (prázdné)
 let gameTimerStart = 10;  // Výchozí čas pro časovač
 let playerScore = 0;  // Výchozí skóre hráče
-let addArrowPoints = 5;  // Počet bodů za správnou šipku v sekvenci
-let addSeqPoints = 10;  // Počet bodů za dokončení sekvence stratagemu
+let arrowPoints = 5;  // Počet bodů za správnou šipku v sekvenci
+let seqPoints = 10;  // Počet bodů za dokončení sekvence stratagemu
 
 /*
   HRA
@@ -74,7 +74,7 @@ function startGame(gameSetup) {
 
   startCountdown(gameSetup.gameTimerStart);
 
-  document.addEventListener('keydown', (event) => {
+  document.addEventListener('keyup', (event) => {
     const arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
     const arrowPressed = event.key;
 
@@ -94,7 +94,7 @@ function checkArrow(arrow, sequence) {
 	  currentListItem.classList.add('text-green-400'); // Přidání třídy pro zelenou barvu
 
 	  currentIndex++; // Přesun na další šipku v sekvenci
-    gameSetup.playerScore = gameSetup.playerScore + addArrowPoints;
+    gameSetup.playerScore = gameSetup.playerScore + arrowPoints;
     
     playerScoreDisplay.textContent = gameSetup.playerScore;
 
@@ -104,7 +104,7 @@ function checkArrow(arrow, sequence) {
     if (currentIndex === sequence.length) {
       console.log('Gratuluji kadete, úspěšně sis zavolal stratagem! Asi nebudeš taková sračka.');
 
-      gameSetup.playerScore = gameSetup.playerScore + addSeqPoints;
+      gameSetup.playerScore = gameSetup.playerScore + seqPoints;
       playerScoreDisplay.textContent = gameSetup.playerScore;
       currentIndex = 0; // Resetovat index pro další použití
 
@@ -112,14 +112,17 @@ function checkArrow(arrow, sequence) {
     }
     
   } else {
-    stratagenSeq.classList.toggle("animate__headShake");
+    stratagenSeq.classList.add("animate__headShake");
+
+    if (gameSetup.playerScore > 0) gameSetup.playerScore = gameSetup.playerScore - arrowPoints;
+    playerScoreDisplay.textContent = gameSetup.playerScore;
 
     // Po určité době (500ms) se odeberte třída "animate__headShake", aby se animace mohla opakovat
     setTimeout(function() {
       stratagenSeq.classList.remove('animate__headShake');
     }, 500);
 
-    console.log('Špatná šipka! Začni makat ty sračko!');
+    console.log('Špatná šipka! Začni makat!');
   }
 }
 
