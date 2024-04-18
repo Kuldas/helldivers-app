@@ -39,3 +39,10 @@
         background-repeat: no-repeat;
     }
 }
+
+.stat {
+    @apply px-3 py-2
+}
+.stat-desc {
+    @apply whitespace-normal
+}
