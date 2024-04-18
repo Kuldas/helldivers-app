@@ -31,4 +31,25 @@ export default {
     extend: {},
   },
   plugins: [require('@tailwindcss/typography'), require('daisyui')],
+
+  // DaisyUI config
+  daisyui: {
+    themes: [
+      {
+        stratHell: {
+          "primary": "#F6E10C",
+          "neutral": "#2a282d",
+          "base-300": "#3a3f4b",
+          "base-content": "#fff"
+        },
+        stratHellTerminids: {
+          "primary": "#d09b29",
+        },
+        stratHellAutomatons: {
+          "primary": "#8c1e1e",
+        },
+      }
+    ],
+    darkTheme: "stratHell"
+  }
 };
