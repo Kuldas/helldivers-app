@@ -13,12 +13,15 @@ const stratagenName = document.getElementById('stratagem-name');	// Získání e
 const stratagenSeq = document.getElementById('stratagem-seq');  // Získání elementu pro aktivační sekvenci stratagemu
 const gameVersionDisplay = document.getElementById('game-version');  // Získání elementu pro verzi hry
 const playerScoreDisplay = document.getElementById('player-score'); // Získání elementu pro skóre hráče
+const progress = document.getElementById("countdown");  // Získání elementu countdown    
 const isMobileDevice = /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);  // Promněná, která kontroluje zda je uživatel na mobilu
 
 // Nastavení hry
 let currentIndex = 0;  // Definice proměnné currentIndex
 let gameSetup = {};  // Výchozí nastavení hry (prázdné)
-let gameTimerStart = 10;  // Výchozí čas pro odpočítávač (v sec)
+let countdownStartTime = null;  // Výchozí čas spuštění countdownu
+let countdownDuration = 15000;  // aktuálně: 15sec - Výchozí čas pro countdown (v ms)
+let seqBonusTime = 1500; // aktuálně: 1,5sec - Bonusový čas za splněnou sekvenci 
 let playerScore = 0;  // Výchozí skóre hráče
 let arrowPoints = 5;  // Počet bodů za správnou šipku v sekvenci
 let seqPoints = 10;  // Počet bodů za dokončení sekvence stratagemu
@@ -77,22 +80,41 @@ function startGame(gameSetup) {
   playerScoreDisplay.textContent = gameSetup.playerScore;
 
   // Přidání nového event listeneru na dokument
-  document.addEventListener('keyup', keyUpHandler);
+  document.addEventListener('keydown', keyUpHandler);
+}
+
+function startCountdown(duration) {
+
+	function updateProgress(timestamp) {
+		if (!countdownStartTime) countdownStartTime = timestamp;
+		var elapsedTime = timestamp - countdownStartTime;
+		var progressValue = Math.max(
+			0,
+			Math.min(10, 10 - (elapsedTime / duration) * 10)
+		);
+		progress.value = progressValue;
+
+		if (progressValue > 0) {
+			requestAnimationFrame(updateProgress);
+		} else {
+			gameOver();
+		}
+	}
+
+	requestAnimationFrame(updateProgress);
 }
 
 function keyUpHandler(event) {
-  if (gameEnded) return;
-
+  
   const arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
   const arrowPressed = event.key;
-
+  
   // Pokud uživatel stiskl klávesu, zkontrolujeme, zda je to správná šipka
   if (arrowKeys.includes(arrowPressed)) {
     event.preventDefault();
-    if (!gameSetup.gameStarted) {
-      startCountdown(gameTimerStart);
-      gameSetup.gameStarted = true;
-    }
+
+
+
     checkArrow(arrowPressed, gameSetup.currentStratagem.activation_sequence);
   }
 }
@@ -102,11 +124,11 @@ function checkArrow(arrow, sequence) {
   const currentListItem = document.getElementById('index-' + currentIndex);
 
   if (arrow === currentArrow) {
-	  currentListItem.classList.add('text-green-400'); // Přidání třídy pro zelenou barvu
+	  currentListItem.classList.add('text-primary'); // Přidání třídy pro zelenou barvu
 
 	  currentIndex++; // Přesun na další šipku v sekvenci
+
     gameSetup.playerScore = gameSetup.playerScore + arrowPoints;
-    
     playerScoreDisplay.textContent = gameSetup.playerScore;
 
     console.log(gameSetup.playerScore);
@@ -117,9 +139,17 @@ function checkArrow(arrow, sequence) {
 
       gameSetup.playerScore = gameSetup.playerScore + seqPoints;
       playerScoreDisplay.textContent = gameSetup.playerScore;
-      currentIndex = 0; // Resetovat index pro další použití
 
+      countdownStartTime += seqBonusTime;
+
+      currentIndex = 0; // Resetovat index pro další použití
+      
       setTimeout(changeStratagem, 250); // Změna stratagemu po dokončení sekvence
+    }
+
+    if (!gameSetup.gameStarted) {
+      startCountdown(countdownDuration);
+      gameSetup.gameStarted = true;
     }
     
   } else {
@@ -163,24 +193,12 @@ function randChoice(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-
-if (isMobileDevice) {
-  const mobileControl = document.getElementById("mobileControl");
-
-  mobileControl.classList.toggle("hidden")
-  console.log("Uživatel používá mobilní zařízení.");
-} else {
-  console.log("Uživatel používá počítač.");
-}
-
 function gameRestart() {
   // Odstranit existující event listener, pokud existuje
   document.removeEventListener('keyup', keyUpHandler);
   resetGameSetup();
-  let progressBar = document.getElementById('countdown');
-  progressBar.value = 100; // Nastavení hodnoty progress baru na 100%
   startGame(gameSetup);
-
+  
   console.log("Stav hry po resetu:", gameSetup)
 }
 
@@ -190,54 +208,45 @@ function resetGameSetup() {
   gameSetup.playerScore = 0;
   currentIndex = 0;
   gameEnded = false;
-
+  progress.value = "10";
+  countdownStartTime = null;
 }
 
 function gameOver() {
   const listItem = document.createElement('li');
   const restartButton = document.createElement('button');
-
+  
   stratagenName.textContent = "Konec hry";
-
-  stratagenSeq.innerHTML = ''; // Vyprázdnění seznamu před přidáním nových šipek
+  
+  stratagenSeq.innerHTML = ''; // Vyprázdnění seznamu
+  restartButton.classList.add("btn", "btn-sm", "btn-primary", "btn-outline");
   restartButton.textContent = 'Restart';
   restartButton.addEventListener('click', gameRestart);
   listItem.appendChild(restartButton)
   stratagenSeq.appendChild(listItem);
-
+  
   gameEnded = true; // Nastavení stavu hry na ukončený
-
+  
   console.log("Konečný stav hry:", gameSetup)
 }
 
-// Funkce pro spuštění odpočítávače
-function startCountdown(duration) {
-  let startTime;
-  let progressBar = document.getElementById('countdown');
+/*
+  Pro mobil
+*/
 
-  function animate(currentTime) {
-    if (!startTime) startTime = currentTime;
-    const elapsedTime = currentTime - startTime;
-    const progress = 1 - (elapsedTime / (duration * 1000)); // Plynulý pohyb progress baru
-    progressBar.value = Math.max(0, progress) * 100;
+if (isMobileDevice) {
+  const mobileControlContainer = document.getElementById("mobileControl");
+  const mobileControl = document.querySelectorAll('.kbd');
 
-    if (progress > 0) {
-      requestAnimationFrame(animate);
-    } else {
-      progressBar.value = 0; // Nastavení na 0% po vypršení času
-      gameOver();
-    }
-  }
-
-  requestAnimationFrame(animate);
-}
-document.querySelectorAll('.kbd').forEach(function(button) {
-  button.addEventListener('click', function() {
-    var direction = this.getAttribute('data-direction');
-    var event = new KeyboardEvent('keydown', {
-      key: direction,
-      bubbles: true
+  mobileControlContainer.classList.toggle("hidden")
+  mobileControl.forEach(arrow => {
+    arrow.addEventListener('click', function() {
+      let direction = this.getAttribute('data-direction');
+      let event = new KeyboardEvent('keyup', { key: direction });
+      keyUpHandler(event);
     });
-    document.dispatchEvent(event);
   });
-});
+  console.log("Uživatel používá mobilní zařízení.");
+} else {
+  console.log("Uživatel používá počítač.");
+}
