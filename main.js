@@ -194,8 +194,7 @@ function randChoice(arr) {
 }
 
 function gameRestart() {
-  // Odstranit existující event listener, pokud existuje
-  document.removeEventListener('keyup', keyUpHandler);
+  
   resetGameSetup();
   startGame(gameSetup);
   
@@ -216,6 +215,9 @@ function gameOver() {
   const listItem = document.createElement('li');
   const restartButton = document.createElement('button');
   
+  // Odstranit existující event listener, pokud existuje
+  document.removeEventListener('keydown', keyUpHandler);
+
   stratagenName.textContent = "Konec hry";
   
   stratagenSeq.innerHTML = ''; // Vyprázdnění seznamu
