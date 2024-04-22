@@ -1,123 +1,183 @@
 <!DOCTYPE html>
 <html data-theme lang="cs">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Helldivers 2 - natrénuj stratagemy</title>
-    <link rel="preload" as="image" href="https://res.cloudinary.com/kuldas/image/upload/v1713185489/dev/helldivers/helldivers-wallpaper_i89xe9.jpg">
-    <!-- Animation library -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-  </head>
-  <body class="flex flex-col min-h-screen">
-    <header class="navbar px-4 bg-primary text-primary-content">
-      <div class="flex-1">
-        <a href="/" class="btn btn-ghost no-animation text-xl">StratHell App</a>
-      </div>
-      <div class="flex-none gap-4">
-        <a href="/changelog" id="game-version" class="text-xs link link-hover"></a>
-        <div class="dropdown dropdown-end">
-          <div tabindex="0" role="button" class="btn btn-sm btn-neutral m-1">
-            frakce
-            <svg width="12px" height="12px" class="h-2 w-2 fill-current opacity-60 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048"><path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path></svg>
-          </div>
-          <ul tabindex="0" class="dropdown-content z-[1] p-2 shadow-2xl bg-neutral text-neutral-content rounded-box w-52">
-            <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Helldivers" value="default" checked/></li>
-            <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Terminids" value="stratHellTerminids"/></li>
-            <li><input type="radio" name="theme-dropdown" class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Automatons" value="stratHellAutomatons"/></li>
-          </ul>
-        </div>
-      </div>
-    </header>
-    <main class="space-y-8 py-16 grow bg-image">
-      <section class="container grid justify-items-center gap-8">
-        <article class="text-center space-y-2 text-neutral-content">
-          <h1 class="text-4xl uppercase font-bold">Tréninkové centrum</h1>
-          <p class="text-xl">trénuj a zlepšuj se, ať  můžeš hrdě sloužit a šířít <span class="uppercase font-bold">demokracii</span>!</p>
-        </article>
-        <div id="game" class="card border-2 w-full md:w-[32rem] border-primary backdrop-blur shadow-xl overflow-hidden">
-          <div id="stratagem-info" class="card-body text-neutral-content justify-center">
-            <h2 id="stratagem-name" class="card-title justify-center"></h2>
-            <ul id="stratagem-seq" class="flex flex-wrap justify-center gap-2 animate__animated animate__faster"></ul>
-          </div>
-          <progress id="countdown" class="progress progress-primary absolute bottom-0 bg-transparent" value="10" max="10"></progress>
-        </div>
 
-        <div class="stats bg-neutral shadow">
+<head>
+	<meta charset="UTF-8" />
+	<link rel="icon" type="image/svg+xml" href="/vite.svg" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Helldivers 2 - natrénuj stratagemy</title>
+	<link rel="preload" as="image"
+		href="https://res.cloudinary.com/kuldas/image/upload/v1713185489/dev/helldivers/helldivers-wallpaper_i89xe9.jpg">
+	<!-- Animation library -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+</head>
 
-          <div class="stat text-neutral-content text-lg">
-            <div class="stat-figure col-start-1 text-primary">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256" class="inline-block w-6 h-6 fill-current"><path d="M216,96A88,88,0,1,0,72,163.83V240a8,8,0,0,0,11.58,7.16L128,225l44.43,22.21A8.07,8.07,0,0,0,176,248a8,8,0,0,0,8-8V163.83A87.85,87.85,0,0,0,216,96ZM56,96a72,72,0,1,1,72,72A72.08,72.08,0,0,1,56,96Zm16,0a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path></svg>
-            </div>
-            <p class="stat-title col-start-2 text-sm">Aktuální</p>
-            <span id="player-score" class="stat-value col-start-2 text-lg">0</span>
-          </div>
-          <div class="stat text-neutral-content text-lg">
-            <div class="stat-figure col-start-1 text-primary">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256" class="inline-block w-6 h-6 fill-current"><path d="M248,80a28,28,0,1,0-51.12,15.77l-26.79,33L146,73.4a28,28,0,1,0-36.06,0L85.91,128.74l-26.79-33a28,28,0,1,0-26.6,12L47,194.63A16,16,0,0,0,62.78,208H193.22A16,16,0,0,0,209,194.63l14.47-86.85A28,28,0,0,0,248,80ZM128,40a12,12,0,1,1-12,12A12,12,0,0,1,128,40ZM24,80A12,12,0,1,1,36,92,12,12,0,0,1,24,80ZM220,92a12,12,0,1,1,12-12A12,12,0,0,1,220,92Z"></path></svg>
-            </div>
-            <p class="stat-title col-start-2 text-sm">Nejlepší</p>
-            <span id="player-score" class="stat-value col-start-2 text-lg">0</span>
-          </div>
+<body class="flex flex-col min-h-screen">
+	<header class="navbar px-4 bg-primary text-primary-content">
+		<div class="flex-1">
+			<a href="/" class="btn btn-ghost no-animation text-xl">StratHell App</a>
+		</div>
+		<div class="flex-none gap-4">
+			<a href="/changelog" id="game-version" class="text-xs link link-hover"></a>
+			<div class="dropdown dropdown-end">
+				<div tabindex="0" role="button" class="btn btn-sm btn-neutral m-1">
+					frakce
+					<svg width="12px" height="12px" class="h-2 w-2 fill-current opacity-60 inline-block"
+						xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048">
+						<path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
+					</svg>
+				</div>
+				<ul tabindex="0"
+					class="dropdown-content z-[1] p-2 shadow-2xl bg-neutral text-neutral-content rounded-box w-52">
+					<li><input type="radio" name="theme-dropdown"
+							class="theme-controller btn btn-sm btn-block btn-ghost justify-start"
+							aria-label="Helldivers" value="default" checked /></li>
+					<li><input type="radio" name="theme-dropdown"
+							class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Terminids"
+							value="stratHellTerminids" /></li>
+					<li><input type="radio" name="theme-dropdown"
+							class="theme-controller btn btn-sm btn-block btn-ghost justify-start"
+							aria-label="Automatons" value="stratHellAutomatons" /></li>
+				</ul>
+			</div>
+		</div>
+	</header>
+	<main class="space-y-16 py-16 grow bg-image">
+		<section class="container grid justify-items-center gap-4">
+			<article class="text-center space-y-2 text-neutral-content">
+				<h1 class="text-4xl uppercase font-bold">Tréninkové centrum</h1>
+				<p class="text-xl">trénuj a zlepšuj se, ať můžeš hrdě sloužit a šířít <span
+						class="uppercase font-bold">demokracii</span>!</p>
+			</article>
+			<div id="game"
+				class="card border-2 w-full md:w-[32rem] border-primary backdrop-blur shadow-xl overflow-hidden">
+				<div id="stratagem-info" class="card-body text-neutral-content justify-center">
+					<h2 id="stratagem-name" class="card-title justify-center"></h2>
+					<ul id="stratagem-seq"
+						class="flex flex-wrap justify-center gap-2 animate__animated animate__faster"></ul>
+				</div>
+				<progress id="countdown" class="progress progress-primary absolute bottom-0 bg-transparent" value="10"
+					max="10"></progress>
+			</div>
 
-        </div>
-        <div class="stats max-w-lg stats-vertical sm:stats-horizontal bg-neutral shadow">
-  
-          <div class="stat gap-x-3">
-            <div class="stat-figure text-primary">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 256 256" class="inline-block w-6 h-6 fill-current"><path d="M92,104a28,28,0,1,0,28,28A28,28,0,0,0,92,104Zm0,40a12,12,0,1,1,12-12A12,12,0,0,1,92,144Zm72-40a28,28,0,1,0,28,28A28,28,0,0,0,164,104Zm0,40a12,12,0,1,1,12-12A12,12,0,0,1,164,144ZM128,16C70.65,16,24,60.86,24,116c0,34.1,18.27,66,48,84.28V216a16,16,0,0,0,16,16h80a16,16,0,0,0,16-16V200.28C213.73,182,232,150.1,232,116,232,60.86,185.35,16,128,16Zm44.12,172.69a8,8,0,0,0-4.12,7V216H152V192a8,8,0,0,0-16,0v24H120V192a8,8,0,0,0-16,0v24H88V195.69a8,8,0,0,0-4.12-7C56.81,173.69,40,145.84,40,116c0-46.32,39.48-84,88-84s88,37.68,88,84C216,145.83,199.19,173.69,172.12,188.69Z"></path></svg>
-            </div>
-            <div class="stat-title text-sm">Selhání</div>
-            <div class="stat-value text-lg">8</div>
-            <div class="stat-desc">počet špatně stisknutých šipek</div>
-          </div>
-          
-          <div class="stat gap-x-3">
-            <div class="stat-figure text-primary">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256" class="inline-block w-6 h-6 fill-current"><path d="M237.66,77.6a8,8,0,0,1-11.32,0L208,59.25,179.3,88l34.35,34.35a8,8,0,0,1-11.32,11.32L196,127.27l-84,84A16,16,0,0,1,100.65,216H51.26L29.6,237.66a8,8,0,0,1-11.72-.43,8.21,8.21,0,0,1,.61-11.1l21.45-21.46V155.28A16,16,0,0,1,44.63,144l15.18-15.18a4,4,0,0,1,5.66,0L94.3,157.63a8,8,0,1,0,11.32-11.32L76.78,117.47a4,4,0,0,1,0-5.66l11-11a4,4,0,0,1,5.66,0l28.84,28.84a8,8,0,1,0,11.32-11.32L104.79,89.46a4,4,0,0,1,0-5.66l23.87-23.86-6.35-6.35a8,8,0,0,1,.18-11.49,8.22,8.22,0,0,1,11.37.41L168,76.63l28.69-28.7L178.33,29.58a8,8,0,0,1,.17-11.49,8.23,8.23,0,0,1,11.38.41l47.78,47.78A8,8,0,0,1,237.66,77.6Z"></path></svg>
-            </div>
-            <div class="stat-title text-sm">Úspěch</div>
-            <div class="stat-value text-lg">1</div>
-            <div class="stat-desc">počet správně stisknutých šipek</div>
-          </div>
-          
-          <div class="stat gap-x-3">
-            <div class="stat-figure text-primary">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256" class="inline-block w-6 h-6 fill-current"><path d="M232,120h-8.34A96.14,96.14,0,0,0,136,32.34V24a8,8,0,0,0-16,0v8.34A96.14,96.14,0,0,0,32.34,120H24a8,8,0,0,0,0,16h8.34A96.14,96.14,0,0,0,120,223.66V232a8,8,0,0,0,16,0v-8.34A96.14,96.14,0,0,0,223.66,136H232a8,8,0,0,0,0-16Zm-32,16h7.6A80.15,80.15,0,0,1,136,207.6V200a8,8,0,0,0-16,0v7.6A80.15,80.15,0,0,1,48.4,136H56a8,8,0,0,0,0-16H48.4A80.15,80.15,0,0,1,120,48.4V56a8,8,0,0,0,16,0V48.4A80.15,80.15,0,0,1,207.6,120H200a8,8,0,0,0,0,16Zm-32-8a40,40,0,1,1-40-40A40,40,0,0,1,168,128Z"></path></svg>
-            </div>
-            <div class="stat-title text-sm">Stratagemy</div>
-            <div class="stat-value text-lg">9</div>
-            <div class="stat-desc">počet úspěšných stratagemů</div>
-          </div>
-          
-        </div>
-        
-      </section>
-      <section id="mobileControl" class="hidden">
-        <div class="flex justify-center w-full">
-          <kbd class="kbd kbd-lg bg-neutral active:bg-primary" data-direction="ArrowUp">▲</kbd>
-        </div>
-        <div class="flex justify-center gap-12 w-full">
-          <kbd class="kbd kbd-lg bg-neutral active:bg-primary" data-direction="ArrowLeft">◀︎</kbd>
-          <kbd class="kbd kbd-lg bg-neutral active:bg-primary" data-direction="ArrowRight">▶︎</kbd>
-        </div>
-        <div class="flex justify-center w-full">
-          <kbd class="kbd kbd-lg bg-neutral active:bg-primary" data-direction="ArrowDown">▼</kbd>
-        </div>
-      </section>
-    </main>
-<footer class="footer items-center p-4 bg-neutral text-neutral-content">
-  <aside class="items-center grid-flow-col">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 258.965" width="250" height="258.965" class="fill-current w-6 h-6"><path d="m124.998 0 98.824 32.909a2.685 2.685 0 0 1 1.832 2.73l-6.524 96.514a2.685 2.685 0 0 0 0.765 2.065l29.331 29.825a2.686 2.686 0 0 1 0.146 3.606l-39.454 47.217a2.685 2.685 0 0 1 -3.075 0.765l-23.235 -9.474a2.685 2.685 0 0 0 -2.174 0.065 2.685 2.685 0 0 0 -1.413 1.654l-10.883 36.397a2.685 2.685 0 0 1 -1.784 1.798l-41.565 12.774a2.694 2.694 0 0 1 -1.578 0l-41.565 -12.774a2.685 2.685 0 0 1 -1.784 -1.798l-10.883 -36.398a2.685 2.685 0 0 0 -1.413 -1.654 2.685 2.685 0 0 0 -2.174 -0.064l-23.235 9.474a2.685 2.685 0 0 1 -3.076 -0.765L0.625 167.649a2.686 2.686 0 0 1 0.146 -3.606l29.331 -29.825a2.685 2.685 0 0 0 0.765 -2.065L24.343 35.638a2.685 2.685 0 0 1 1.832 -2.73zm-1.143 178.731 -14.833 21.671a2.011 2.011 0 0 0 0.421 2.72l5.465 4.271a2.011 2.011 0 0 0 2.721 -0.225l6.676 -7.282a0.94 0.94 0 0 1 1.386 0l6.676 7.282a2.011 2.011 0 0 0 2.721 0.225l5.465 -4.271a2.011 2.011 0 0 0 0.421 -2.72l-14.833 -21.671a1.384 1.384 0 0 0 -2.286 0M179.671 124.434c-14.401 0 -26.092 11.691 -26.092 26.093s11.691 26.093 26.092 26.093c14.401 0 26.093 -11.692 26.093 -26.093s-11.691 -26.093 -26.093 -26.093m-109.346 0c-14.401 0 -26.093 11.691 -26.093 26.093s11.692 26.093 26.093 26.093 26.093 -11.692 26.093 -26.093 -11.691 -26.093 -26.093 -26.093"/></svg>
-    <p>Kuldas - 2024 - made with love for democracy ✊</p>
-  </aside> 
-  <nav class="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
-    <a href="https://discord.gg/Ap44TA92kf" target="_blank" class="link link-hover inline-flex items-center gap-1 text-xs">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256" class="fill-current"><path d="M247.51,174.39,218,58a16.08,16.08,0,0,0-13-11.88l-36.06-5.92a16.22,16.22,0,0,0-18.26,11.88l-.21.85a4,4,0,0,0,3.27,4.93,155.62,155.62,0,0,1,24.41,5.62,8.2,8.2,0,0,1,5.62,9.7,8,8,0,0,1-10.19,5.64,155.4,155.4,0,0,0-90.8-.1,8.22,8.22,0,0,1-10.28-4.81,8,8,0,0,1,5.08-10.33,156.85,156.85,0,0,1,24.72-5.72,4,4,0,0,0,3.27-4.93l-.21-.85A16.21,16.21,0,0,0,87.08,40.21L51,46.13A16.08,16.08,0,0,0,38,58L8.49,174.39a15.94,15.94,0,0,0,9.06,18.51l67,29.71a16.17,16.17,0,0,0,21.71-9.1l3.49-9.45a4,4,0,0,0-3.27-5.35,158.13,158.13,0,0,1-28.63-6.2,8.2,8.2,0,0,1-5.61-9.67,8,8,0,0,1,10.2-5.66,155.59,155.59,0,0,0,91.12,0,8,8,0,0,1,10.19,5.65,8.19,8.19,0,0,1-5.61,9.68,157.84,157.84,0,0,1-28.62,6.2,4,4,0,0,0-3.27,5.35l3.49,9.45a16.18,16.18,0,0,0,21.71,9.1l67-29.71A15.94,15.94,0,0,0,247.51,174.39ZM92,152a12,12,0,1,1,12-12A12,12,0,0,1,92,152Zm72,0a12,12,0,1,1,12-12A12,12,0,0,1,164,152Z"></path></svg>
-      Discord CZ/SK
-    </a>
-  </nav>
-</footer>
-    <script type="module" src="/main.js"></script>
-  </body>
+			<div class="stats bg-neutral shadow">
+
+				<div class="stat text-neutral-content text-lg">
+					<div class="stat-figure col-start-1 text-primary">
+						<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256"
+							class="inline-block w-6 h-6 fill-current">
+							<path
+								d="M216,96A88,88,0,1,0,72,163.83V240a8,8,0,0,0,11.58,7.16L128,225l44.43,22.21A8.07,8.07,0,0,0,176,248a8,8,0,0,0,8-8V163.83A87.85,87.85,0,0,0,216,96ZM56,96a72,72,0,1,1,72,72A72.08,72.08,0,0,1,56,96Zm16,0a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z">
+							</path>
+						</svg>
+					</div>
+					<p class="stat-title col-start-2 text-sm">Tvoje skóre</p>
+					<span id="player-score" class="stat-value col-start-2 text-lg">-</span>
+				</div>
+
+			</div>
+
+		</section>
+		<section class="container grid justify-items-center gap-4">
+			<h2 class="text-2xl">Tvoje statistiky</h2>
+
+			<div class="stats stats-4 bg-neutral shadow">
+
+				<div class="stat bg-primary/80 gap-x-3">
+					<div class="stat-figure text-primary-content">
+						<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256"
+							class="inline-block w-6 h-6 fill-current">
+							<path
+								d="M248,80a28,28,0,1,0-51.12,15.77l-26.79,33L146,73.4a28,28,0,1,0-36.06,0L85.91,128.74l-26.79-33a28,28,0,1,0-26.6,12L47,194.63A16,16,0,0,0,62.78,208H193.22A16,16,0,0,0,209,194.63l14.47-86.85A28,28,0,0,0,248,80ZM128,40a12,12,0,1,1-12,12A12,12,0,0,1,128,40ZM24,80A12,12,0,1,1,36,92,12,12,0,0,1,24,80ZM220,92a12,12,0,1,1,12-12A12,12,0,0,1,220,92Z">
+							</path>
+						</svg>
+					</div>
+					<div class="stat-title text-primary-content text-sm">Nejlepší skóre</div>
+					<div id="player-best" class="stat-value text-primary-content text-lg">-</div>
+					<div class="stat-desc text-primary-content">Tvé největší dosažené skóre</div>
+				</div>
+
+				<div class="stat gap-x-3">
+					<div class="stat-figure text-primary">
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 256 256"
+							class="inline-block w-6 h-6 fill-current">
+							<path
+								d="M92,104a28,28,0,1,0,28,28A28,28,0,0,0,92,104Zm0,40a12,12,0,1,1,12-12A12,12,0,0,1,92,144Zm72-40a28,28,0,1,0,28,28A28,28,0,0,0,164,104Zm0,40a12,12,0,1,1,12-12A12,12,0,0,1,164,144ZM128,16C70.65,16,24,60.86,24,116c0,34.1,18.27,66,48,84.28V216a16,16,0,0,0,16,16h80a16,16,0,0,0,16-16V200.28C213.73,182,232,150.1,232,116,232,60.86,185.35,16,128,16Zm44.12,172.69a8,8,0,0,0-4.12,7V216H152V192a8,8,0,0,0-16,0v24H120V192a8,8,0,0,0-16,0v24H88V195.69a8,8,0,0,0-4.12-7C56.81,173.69,40,145.84,40,116c0-46.32,39.48-84,88-84s88,37.68,88,84C216,145.83,199.19,173.69,172.12,188.69Z">
+							</path>
+						</svg>
+					</div>
+					<div class="stat-title text-sm">Tvé selhání</div>
+					<div id="failedArrows" class="stat-value text-lg">-</div>
+					<div class="stat-desc">Počet špatně stisknutých šipek</div>
+				</div>
+
+				<div class="stat gap-x-3">
+					<div class="stat-figure text-primary">
+						<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256"
+							class="inline-block w-6 h-6 fill-current">
+							<path
+								d="M237.66,77.6a8,8,0,0,1-11.32,0L208,59.25,179.3,88l34.35,34.35a8,8,0,0,1-11.32,11.32L196,127.27l-84,84A16,16,0,0,1,100.65,216H51.26L29.6,237.66a8,8,0,0,1-11.72-.43,8.21,8.21,0,0,1,.61-11.1l21.45-21.46V155.28A16,16,0,0,1,44.63,144l15.18-15.18a4,4,0,0,1,5.66,0L94.3,157.63a8,8,0,1,0,11.32-11.32L76.78,117.47a4,4,0,0,1,0-5.66l11-11a4,4,0,0,1,5.66,0l28.84,28.84a8,8,0,1,0,11.32-11.32L104.79,89.46a4,4,0,0,1,0-5.66l23.87-23.86-6.35-6.35a8,8,0,0,1,.18-11.49,8.22,8.22,0,0,1,11.37.41L168,76.63l28.69-28.7L178.33,29.58a8,8,0,0,1,.17-11.49,8.23,8.23,0,0,1,11.38.41l47.78,47.78A8,8,0,0,1,237.66,77.6Z">
+							</path>
+						</svg>
+					</div>
+					<div class="stat-title text-sm">Tvé úspěchy</div>
+					<div id="successArrows" class="stat-value text-lg">-</div>
+					<div class="stat-desc">Počet správně stisknutých šipek</div>
+				</div>
+
+				<div class="stat gap-x-3">
+					<div class="stat-figure text-primary">
+						<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 256 256"
+							class="inline-block w-6 h-6 fill-current">
+							<path
+								d="M232,120h-8.34A96.14,96.14,0,0,0,136,32.34V24a8,8,0,0,0-16,0v8.34A96.14,96.14,0,0,0,32.34,120H24a8,8,0,0,0,0,16h8.34A96.14,96.14,0,0,0,120,223.66V232a8,8,0,0,0,16,0v-8.34A96.14,96.14,0,0,0,223.66,136H232a8,8,0,0,0,0-16Zm-32,16h7.6A80.15,80.15,0,0,1,136,207.6V200a8,8,0,0,0-16,0v7.6A80.15,80.15,0,0,1,48.4,136H56a8,8,0,0,0,0-16H48.4A80.15,80.15,0,0,1,120,48.4V56a8,8,0,0,0,16,0V48.4A80.15,80.15,0,0,1,207.6,120H200a8,8,0,0,0,0,16Zm-32-8a40,40,0,1,1-40-40A40,40,0,0,1,168,128Z">
+							</path>
+						</svg>
+					</div>
+					<div class="stat-title text-sm">Stratagemy</div>
+					<div id="completeStratagems" class="stat-value text-lg">-</div>
+					<div class="stat-desc">Počet úspěšných stratagemů</div>
+				</div>
+
+			</div>
+
+		</section>
+		<section id="mobileControl" class="hidden">
+			<div class="flex justify-center w-full">
+				<kbd class="kbd kbd-lg bg-neutral active:bg-primary" data-direction="ArrowUp">▲</kbd>
+			</div>
+			<div class="flex justify-center gap-12 w-full">
+				<kbd class="kbd kbd-lg bg-neutral active:bg-primary" data-direction="ArrowLeft">◀︎</kbd>
+				<kbd class="kbd kbd-lg bg-neutral active:bg-primary" data-direction="ArrowRight">▶︎</kbd>
+			</div>
+			<div class="flex justify-center w-full">
+				<kbd class="kbd kbd-lg bg-neutral active:bg-primary" data-direction="ArrowDown">▼</kbd>
+			</div>
+		</section>
+	</main>
+	<footer class="footer items-center p-4 bg-neutral text-neutral-content">
+		<aside class="items-center grid-flow-col">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 258.965" width="250" height="258.965"
+				class="fill-current w-6 h-6">
+				<path
+					d="m124.998 0 98.824 32.909a2.685 2.685 0 0 1 1.832 2.73l-6.524 96.514a2.685 2.685 0 0 0 0.765 2.065l29.331 29.825a2.686 2.686 0 0 1 0.146 3.606l-39.454 47.217a2.685 2.685 0 0 1 -3.075 0.765l-23.235 -9.474a2.685 2.685 0 0 0 -2.174 0.065 2.685 2.685 0 0 0 -1.413 1.654l-10.883 36.397a2.685 2.685 0 0 1 -1.784 1.798l-41.565 12.774a2.694 2.694 0 0 1 -1.578 0l-41.565 -12.774a2.685 2.685 0 0 1 -1.784 -1.798l-10.883 -36.398a2.685 2.685 0 0 0 -1.413 -1.654 2.685 2.685 0 0 0 -2.174 -0.064l-23.235 9.474a2.685 2.685 0 0 1 -3.076 -0.765L0.625 167.649a2.686 2.686 0 0 1 0.146 -3.606l29.331 -29.825a2.685 2.685 0 0 0 0.765 -2.065L24.343 35.638a2.685 2.685 0 0 1 1.832 -2.73zm-1.143 178.731 -14.833 21.671a2.011 2.011 0 0 0 0.421 2.72l5.465 4.271a2.011 2.011 0 0 0 2.721 -0.225l6.676 -7.282a0.94 0.94 0 0 1 1.386 0l6.676 7.282a2.011 2.011 0 0 0 2.721 0.225l5.465 -4.271a2.011 2.011 0 0 0 0.421 -2.72l-14.833 -21.671a1.384 1.384 0 0 0 -2.286 0M179.671 124.434c-14.401 0 -26.092 11.691 -26.092 26.093s11.691 26.093 26.092 26.093c14.401 0 26.093 -11.692 26.093 -26.093s-11.691 -26.093 -26.093 -26.093m-109.346 0c-14.401 0 -26.093 11.691 -26.093 26.093s11.692 26.093 26.093 26.093 26.093 -11.692 26.093 -26.093 -11.691 -26.093 -26.093 -26.093" />
+			</svg>
+			<p>Kuldas - 2024 - made with love for democracy ✊</p>
+		</aside>
+		<nav class="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
+			<a href="https://discord.gg/Ap44TA92kf" target="_blank"
+				class="link link-hover inline-flex items-center gap-1 text-xs">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256"
+					class="fill-current">
+					<path
+						d="M247.51,174.39,218,58a16.08,16.08,0,0,0-13-11.88l-36.06-5.92a16.22,16.22,0,0,0-18.26,11.88l-.21.85a4,4,0,0,0,3.27,4.93,155.62,155.62,0,0,1,24.41,5.62,8.2,8.2,0,0,1,5.62,9.7,8,8,0,0,1-10.19,5.64,155.4,155.4,0,0,0-90.8-.1,8.22,8.22,0,0,1-10.28-4.81,8,8,0,0,1,5.08-10.33,156.85,156.85,0,0,1,24.72-5.72,4,4,0,0,0,3.27-4.93l-.21-.85A16.21,16.21,0,0,0,87.08,40.21L51,46.13A16.08,16.08,0,0,0,38,58L8.49,174.39a15.94,15.94,0,0,0,9.06,18.51l67,29.71a16.17,16.17,0,0,0,21.71-9.1l3.49-9.45a4,4,0,0,0-3.27-5.35,158.13,158.13,0,0,1-28.63-6.2,8.2,8.2,0,0,1-5.61-9.67,8,8,0,0,1,10.2-5.66,155.59,155.59,0,0,0,91.12,0,8,8,0,0,1,10.19,5.65,8.19,8.19,0,0,1-5.61,9.68,157.84,157.84,0,0,1-28.62,6.2,4,4,0,0,0-3.27,5.35l3.49,9.45a16.18,16.18,0,0,0,21.71,9.1l67-29.71A15.94,15.94,0,0,0,247.51,174.39ZM92,152a12,12,0,1,1,12-12A12,12,0,0,1,92,152Zm72,0a12,12,0,1,1,12-12A12,12,0,0,1,164,152Z">
+					</path>
+				</svg>
+				Discord CZ/SK
+			</a>
+		</nav>
+	</footer>
+	<script type="module" src="/main.js"></script>
+</body>
+
 </html>

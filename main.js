@@ -1,86 +1,97 @@
 /*
-  Importy
+	Importy
 */
-import './style.css';  // Import stylů
-import { arrowIcon } from './assets/js/functions.js';  // Import funkcí
-import { version } from './package.json';  // Import verze hry
-
-/* 
-  Promněné
-*/
-const stratagemsDataPath = './data/stratagems.json';	// Cesta ke Stratagem datům
-const stratagenName = document.getElementById('stratagem-name');	// Získání elementu pro jméno stratagemu
-const stratagenSeq = document.getElementById('stratagem-seq');  // Získání elementu pro aktivační sekvenci stratagemu
-const gameVersionDisplay = document.getElementById('game-version');  // Získání elementu pro verzi hry
-const playerScoreDisplay = document.getElementById('player-score'); // Získání elementu pro skóre hráče
-const progress = document.getElementById("countdown");  // Získání elementu countdown    
-const isMobileDevice = /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);  // Promněná, která kontroluje zda je uživatel na mobilu
-
-// Nastavení hry
-let currentIndex = 0;  // Definice proměnné currentIndex
-let gameSetup = {};  // Výchozí nastavení hry (prázdné)
-let countdownStartTime = null;  // Výchozí čas spuštění countdownu
-let countdownDuration = 15000;  // aktuálně: 15sec - Výchozí čas pro countdown (v ms)
-let seqBonusTime = 1500; // aktuálně: 1,5sec - Bonusový čas za splněnou sekvenci 
-let playerScore = 0;  // Výchozí skóre hráče
-let arrowPoints = 5;  // Počet bodů za správnou šipku v sekvenci
-let seqPoints = 10;  // Počet bodů za dokončení sekvence stratagemu
-let gameStarted = false; // Indikátor, zda byla hra spuštěna
-let gameEnded = false; // Indikátor, zda byla hra ukončena
+import './style.css';									// Import stylů
+import { arrowIcon } from './assets/js/functions.js';	// Import funkce/í
+import { version } from './package.json';				// Import verze hry
 
 /*
-  HRA
+	Promněné
 */
+const stratagemsDataPath = './data/stratagems.json';					// Cesta ke Stratagem datům
+const gameVersionDisplay = document.getElementById('game-version');		// Získání elementu pro verzi hry
+const stratagenName = document.getElementById('stratagem-name');		// Získání elementu pro jméno stratagemu
+const stratagenSeq = document.getElementById('stratagem-seq');			// Získání elementu pro aktivační sekvenci stratagemu
+const failedArrowsDisplay = document.getElementById('failedArrows')		// Získání elementu pro neúspěšně zmáčknuté šipky
+const successArrowsDisplay = document.getElementById('successArrows')	// Získání elementu pro úspěšně zmáčknuté šipky
+const completeStratagemsDisplay = document.getElementById('completeStratagems')	// Získání elementu pro úspěšné zavolané stratagemy
+const playerScoreDisplay = document.getElementById('player-score');		// Získání elementu pro skóre hráče
+const playerScoreBestDisplay = document.getElementById('player-best');	// Získání elementu pro nejlepší skóre hráče
+const progress = document.getElementById("countdown");					// Získání elementu countdown
+const isMobileDevice = /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);	// Promněná, která kontroluje zda je uživatel na mobilu
+
+// Nastavení hry
+let gameSetup = {};				// Výchozí nastavení hry (prázdné)
+let playerStats = {
+	playerName: null,			// Jméno hráče (aktuálně nefunkční)
+	playerScore: 0,				// Skóre hráče
+	playerScoreBest: 0,			// Nejlepší skóre hráče
+	failedArrows: 0,			// Špatně zmáčknuté šipky
+	successArrows: 0,			// Správně zmáčknuté šipky
+	completeStratagems: 0		// Úspěšně "zavolané" stratagemy
+}
+let arrowPositionIndex = 0;		// Definice proměnné arrowPositionIndex
+let countdownStartTime = null;	// Výchozí čas spuštění countdownu
+let countdownDuration = 15000;	// aktuálně: 15sec - Výchozí čas pro countdown (v ms)
+let seqBonusTime = 1500;		// aktuálně: 1,5sec - Bonusový čas za splněnou sekvenci (v ms)
+let arrowPoints = 5;			// Počet bodů za správnou šipku v sekvenci
+let seqPoints = 10;				// Počet bodů za dokončení sekvence stratagemu
+let isGameRunning = false;		// Indikátor, zda byla hra spuštěna
+
+
+/**
+ * HRA
+ */
 
 // Vrací verzi hry pro zobrazení na frontendu
 gameVersionDisplay.textContent = "v" + version;
 
 // Získání dat z JSON a přidání do gameSetup
 fetch(stratagemsDataPath)
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error('Načítání dat selhalo');
-    }
-    return response.json();
-  })
-  .then((data) => {
-    const stratagemsData = data;
-    console.log('Data z JSON:', stratagemsData);	// Zobrazení dat v konzoli (pro vývoj)
+	.then((response) => {
+		if (!response.ok) {
+			throw new Error('Načítání dat selhalo');
+		}
+		return response.json();
+	})
+	.then((data) => {
+		const stratagemsData = data;
+		console.log('Data z JSON:', stratagemsData);	// Zobrazení dat v konzoli (pro vývoj)
 
-    gameSetup = {
-      stratagems: stratagemsData.stratagems,
-      currentStratagem: [],
-      gameStarted,
-      playerScore
-    };
-    console.log('Výchozí stav hry:', gameSetup);	// Zobrazení výchozího nastavení hry v konzoli (pro vývoj)
+		gameSetup = {
+			stratagems: stratagemsData.stratagems,
+			currentStratagem: [],
+			isGameRunning,
+			playerStats: playerStats
+		};
+		console.log('Výchozí stav hry:', gameSetup);	// Zobrazení výchozího nastavení hry v konzoli (pro vývoj)
 
-    startGame(gameSetup);	// Spuštění hry s výchozím nastavením
-  })
-  .catch((error) => {
-    console.error('Chyba při načítání dat:', error);	// Odchycení chyby při načítání dat
-  });
+		startGame(gameSetup);	// Spuštění hry s výchozím nastavením
+	})
+	.catch((error) => {
+		console.error('Chyba při načítání dat:', error);	// Odchycení chyby při načítání dat
+	});
 
 function startGame(gameSetup) {
-  const randomStratagem = randChoice(gameSetup.stratagems);
-  gameSetup.currentStratagem = randomStratagem;
+	const randomStratagem = randChoice(gameSetup.stratagems);
+	gameSetup.currentStratagem = randomStratagem;
 
-  stratagenName.textContent = gameSetup.currentStratagem.name;
+	stratagenName.textContent = gameSetup.currentStratagem.name;
 
-  stratagenSeq.innerHTML = ''; // Vyprázdnění seznamu před přidáním nových šipek
+	stratagenSeq.innerHTML = ''; // Vyprázdnění seznamu před přidáním nových šipek
 
-  gameSetup.currentStratagem.activation_sequence.forEach((arrow, index) => {
-    let listItem = document.createElement('li');
+	gameSetup.currentStratagem.activation_sequence.forEach((arrow, index) => {
+		let listItem = document.createElement('li');
 
-    listItem.innerHTML = arrowIcon(arrow);
-    listItem.setAttribute('id', 'index-' + index);
-    stratagenSeq.appendChild(listItem);
-  });
+		listItem.innerHTML = arrowIcon(arrow);
+		listItem.setAttribute('id', 'index-' + index);
+		stratagenSeq.appendChild(listItem);
+	});
 
-  playerScoreDisplay.textContent = gameSetup.playerScore;
+	playerScoreDisplay.textContent = gameSetup.playerStats.playerScore;
 
-  // Přidání nového event listeneru na dokument
-  document.addEventListener('keydown', keyUpHandler);
+	// Přidání nového event listeneru na dokument
+	document.addEventListener('keydown', checkEventKey);
 }
 
 function startCountdown(duration) {
@@ -104,151 +115,159 @@ function startCountdown(duration) {
 	requestAnimationFrame(updateProgress);
 }
 
-function keyUpHandler(event) {
-  
-  const arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
-  const arrowPressed = event.key;
-  
-  // Pokud uživatel stiskl klávesu, zkontrolujeme, zda je to správná šipka
-  if (arrowKeys.includes(arrowPressed)) {
-    event.preventDefault();
+function checkEventKey(event) {
 
+	const arrowKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+	const arrowPressed = event.key;
 
+	// Pokud uživatel stiskl klávesu, zkontrolujeme, zda je to správná šipka
+	if (arrowKeys.includes(arrowPressed)) {
+		event.preventDefault();
 
-    checkArrow(arrowPressed, gameSetup.currentStratagem.activation_sequence);
-  }
+		checkArrow(arrowPressed, gameSetup.currentStratagem.activation_sequence);
+	}
 }
 
 function checkArrow(arrow, sequence) {
-  const currentArrow = sequence[currentIndex];
-  const currentListItem = document.getElementById('index-' + currentIndex);
+	const currentArrow = sequence[arrowPositionIndex];
+	const currentListItem = document.getElementById('index-' + arrowPositionIndex);
 
-  if (arrow === currentArrow) {
-	  currentListItem.classList.add('text-primary'); // Přidání třídy pro zelenou barvu
+	if (arrow === currentArrow) {
+		arrowPositionIndex++; // Přesun na další šipku v sekvenci
+		gameSetup.playerStats.playerScore = gameSetup.playerStats.playerScore + arrowPoints;
+		gameSetup.playerStats.successArrows += 1;
 
-	  currentIndex++; // Přesun na další šipku v sekvenci
+		currentListItem.classList.add('text-primary'); // Přidání třídy pro zelenou barvu
+		playerScoreDisplay.textContent = gameSetup.playerStats.playerScore;
+		successArrowsDisplay.textContent = gameSetup.playerStats.successArrows;
 
-    gameSetup.playerScore = gameSetup.playerScore + arrowPoints;
-    playerScoreDisplay.textContent = gameSetup.playerScore;
+		console.log(gameSetup.playerStats.playerScore);
+		console.log('Správná šipka!');
 
-    console.log(gameSetup.playerScore);
-	  console.log('Správná šipka!');
+		if (arrowPositionIndex === sequence.length) {
+			countdownStartTime += seqBonusTime;
+			gameSetup.playerStats.playerScore = gameSetup.playerStats.playerScore + seqPoints;
+			gameSetup.playerStats.completeStratagems += 1;
 
-    if (currentIndex === sequence.length) {
-      console.log('Gratuluji kadete, úspěšně sis zavolal stratagem! Asi nebudeš taková sračka.');
+			playerScoreDisplay.textContent = gameSetup.playerStats.playerScore;
+			completeStratagemsDisplay.textContent = gameSetup.playerStats.completeStratagems;
 
-      gameSetup.playerScore = gameSetup.playerScore + seqPoints;
-      playerScoreDisplay.textContent = gameSetup.playerScore;
+			arrowPositionIndex = 0; // Resetovat index pro další použití
 
-      countdownStartTime += seqBonusTime;
+			setTimeout(changeStratagem, 250); // Změna stratagemu po dokončení sekvence
 
-      currentIndex = 0; // Resetovat index pro další použití
-      
-      setTimeout(changeStratagem, 250); // Změna stratagemu po dokončení sekvence
-    }
+			console.log('Gratuluji kadete, úspěšně sis zavolal stratagem! Asi nebudeš taková sračka.');
+		}
 
-    if (!gameSetup.gameStarted) {
-      startCountdown(countdownDuration);
-      gameSetup.gameStarted = true;
-    }
-    
-  } else {
-    stratagenSeq.classList.add("animate__headShake");
+		if (!gameSetup.isGameRunning) {
+			startCountdown(countdownDuration);
+			gameSetup.isGameRunning = true;
+		}
 
-    if (gameSetup.playerScore > 0) gameSetup.playerScore = gameSetup.playerScore - arrowPoints;
-    playerScoreDisplay.textContent = gameSetup.playerScore;
+	} else {
+		stratagenSeq.classList.add("animate__headShake");
+		gameSetup.playerStats.failedArrows += 1;
 
-    // Po určité době (500ms) se odeberte třída "animate__headShake", aby se animace mohla opakovat
-    setTimeout(function() {
-      stratagenSeq.classList.remove('animate__headShake');
-    }, 500);
+		if (gameSetup.playerStats.playerScore > 0) gameSetup.playerStats.playerScore = gameSetup.playerStats.playerScore - arrowPoints;
 
-    console.log('Špatná šipka! Začni makat!');
-  }
+		playerScoreDisplay.textContent = gameSetup.playerStats.playerScore;
+		failedArrowsDisplay.textContent = gameSetup.playerStats.failedArrows;
+
+		// Po určité době (500ms) se odeberte třída "animate__headShake", aby se animace mohla opakovat
+		setTimeout(function () {
+			stratagenSeq.classList.remove('animate__headShake');
+		}, 500);
+
+		console.log('Špatná šipka! Začni makat!');
+	}
 }
 
 function changeStratagem() {
-  let randomStratagem;
-  do {
-    randomStratagem = randChoice(gameSetup.stratagems);
-  } while (randomStratagem === gameSetup.currentStratagem);
+	let randomStratagem;
 
-  gameSetup.currentStratagem = randomStratagem;
+	do {
+		randomStratagem = randChoice(gameSetup.stratagems);
+	} while (randomStratagem === gameSetup.currentStratagem);
 
-  stratagenName.textContent = gameSetup.currentStratagem.name;
+	gameSetup.currentStratagem = randomStratagem;
 
-  stratagenSeq.innerHTML = ''; // Vyprázdnění seznamu před přidáním nových šipek
+	stratagenName.textContent = gameSetup.currentStratagem.name;
 
-  gameSetup.currentStratagem.activation_sequence.forEach((arrow, index) => {
-    let listItem = document.createElement('li');
-    listItem.innerHTML = arrowIcon(arrow);
-    listItem.setAttribute('id', 'index-' + index);
-    stratagenSeq.appendChild(listItem);
-  });
-  console.log("Stav hry po vybrání náhodného stratagemu:", gameSetup);
-  console.log("Nový náhodný stratagem:", gameSetup.currentStratagem.name);
+	stratagenSeq.innerHTML = ''; // Vyprázdnění seznamu před přidáním nových šipek
+
+	gameSetup.currentStratagem.activation_sequence.forEach((arrow, index) => {
+		let listItem = document.createElement('li');
+		listItem.innerHTML = arrowIcon(arrow);
+		listItem.setAttribute('id', 'index-' + index);
+		stratagenSeq.appendChild(listItem);
+	});
+
+	console.log("Stav hry po vybrání náhodného stratagemu:", gameSetup);
+	console.log("Nový náhodný stratagem:", gameSetup.currentStratagem.name);
 }
 
 function randChoice(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
+	return arr[Math.floor(Math.random() * arr.length)];
 }
 
 function gameRestart() {
-  
-  resetGameSetup();
-  startGame(gameSetup);
-  
-  console.log("Stav hry po resetu:", gameSetup)
+
+	resetGameSetup();
+	startGame(gameSetup);
+
+	console.log("Stav hry po resetu:", gameSetup)
 }
 
 function resetGameSetup() {
-  gameSetup.currentStratagem = [];
-  gameSetup.gameStarted = false;
-  gameSetup.playerScore = 0;
-  currentIndex = 0;
-  gameEnded = false;
-  progress.value = "10";
-  countdownStartTime = null;
+	gameSetup.currentStratagem = [];
+	gameSetup.isGameRunning = false;
+	gameSetup.playerStats.playerScore = 0;
+	arrowPositionIndex = 0;
+	progress.value = "10";
+	countdownStartTime = null;
 }
 
 function gameOver() {
-  const listItem = document.createElement('li');
-  const restartButton = document.createElement('button');
-  
-  // Odstranit existující event listener, pokud existuje
-  document.removeEventListener('keydown', keyUpHandler);
+	const listItem = document.createElement('li');
+	const restartButton = document.createElement('button');
 
-  stratagenName.textContent = "Konec hry";
-  
-  stratagenSeq.innerHTML = ''; // Vyprázdnění seznamu
-  restartButton.classList.add("btn", "btn-sm", "btn-primary", "btn-outline");
-  restartButton.textContent = 'Restart';
-  restartButton.addEventListener('click', gameRestart);
-  listItem.appendChild(restartButton)
-  stratagenSeq.appendChild(listItem);
-  
-  gameEnded = true; // Nastavení stavu hry na ukončený
-  
-  console.log("Konečný stav hry:", gameSetup)
+	// Odstraní existující event listener, pokud existuje
+	document.removeEventListener('keydown', checkEventKey);
+
+	stratagenName.textContent = "Konec hry";
+
+	stratagenSeq.innerHTML = ''; // Vyprázdnění seznamu
+	restartButton.classList.add("btn", "btn-sm", "btn-primary", "btn-outline");
+	restartButton.textContent = 'Restart';
+	restartButton.addEventListener('click', gameRestart);
+	listItem.appendChild(restartButton)
+	stratagenSeq.appendChild(listItem);
+
+	if (gameSetup.playerStats.playerScore > gameSetup.playerStats.playerScoreBest) {
+		gameSetup.playerStats.playerScoreBest = gameSetup.playerStats.playerScore;
+		playerScoreBestDisplay.textContent = gameSetup.playerStats.playerScoreBest;
+	}
+
+	console.log("Konečný stav hry:", gameSetup)
 }
 
 /*
-  Pro mobil
+	Pro mobil
 */
 
 if (isMobileDevice) {
-  const mobileControlContainer = document.getElementById("mobileControl");
-  const mobileControl = document.querySelectorAll('.kbd');
+	const mobileControlContainer = document.getElementById("mobileControl");
+	const mobileControl = document.querySelectorAll('.kbd');
 
-  mobileControlContainer.classList.toggle("hidden")
-  mobileControl.forEach(arrow => {
-    arrow.addEventListener('click', function() {
-      let direction = this.getAttribute('data-direction');
-      let event = new KeyboardEvent('keyup', { key: direction });
-      keyUpHandler(event);
-    });
-  });
-  console.log("Uživatel používá mobilní zařízení.");
+	mobileControlContainer.classList.toggle("hidden")
+	mobileControl.forEach(arrow => {
+		arrow.addEventListener('click', function () {
+			let direction = this.getAttribute('data-direction');
+			let event = new KeyboardEvent('keyup', { key: direction });
+			checkEventKey(event);
+		});
+	});
+	console.log("Uživatel používá mobilní zařízení.");
 } else {
-  console.log("Uživatel používá počítač.");
+	console.log("Uživatel používá počítač.");
 }

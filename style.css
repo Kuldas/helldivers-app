@@ -39,10 +39,39 @@
         background-repeat: no-repeat;
     }
 }
+:root {
+    scroll-behavior: smooth;
+}
 
+.stats-4 {
+	@apply grid-flow-row
+}
+
+@media screen(sm){
+	.stats-4 {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+	
 .stat {
     @apply px-3 py-2
 }
+.stat {
+	grid-template-columns: repeat(1, auto 1fr);
+	grid-template-rows: auto auto 1fr;
+}
+.stat-figure {
+	@apply col-start-1 justify-self-start row-span-2
+}
+.stat-title {
+	@apply col-start-2 justify-self-start
+}
+.stat-value {
+	@apply col-start-2 justify-self-start
+}
 .stat-desc {
-    @apply whitespace-normal
+    @apply whitespace-normal col-span-2
+}
+.scroll-lock {
+    overflow: hidden;
 }
