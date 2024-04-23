@@ -1,13 +1,13 @@
-/*
-	Importy
-*/
+/**
+ *	Importy
+ */
 import './style.css';									// Import stylů
 import { arrowIcon } from './assets/js/functions.js';	// Import funkce/í
 import { version } from './package.json';				// Import verze hry
 
-/*
-	Promněné
-*/
+/**
+ *	Promněné 
+ */
 const stratagemsDataPath = './data/stratagems.json';					// Cesta ke Stratagem datům
 const gameVersionDisplay = document.getElementById('game-version');		// Získání elementu pro verzi hry
 const stratagenName = document.getElementById('stratagem-name');		// Získání elementu pro jméno stratagemu
@@ -20,7 +20,9 @@ const playerScoreBestDisplay = document.getElementById('player-best');	// Získ�
 const progress = document.getElementById("countdown");					// Získání elementu countdown
 const isMobileDevice = /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);	// Promněná, která kontroluje zda je uživatel na mobilu
 
-// Nastavení hry
+/**
+ *	Nastavení hry
+ */
 let gameSetup = {};				// Výchozí nastavení hry (prázdné)
 let playerStats = {
 	playerName: null,			// Jméno hráče (aktuálně nefunkční)
@@ -40,7 +42,7 @@ let isGameRunning = false;		// Indikátor, zda byla hra spuštěna
 
 
 /**
- * HRA
+ *	HRA
  */
 
 // Vrací verzi hry pro zobrazení na frontendu
@@ -64,6 +66,7 @@ fetch(stratagemsDataPath)
 			isGameRunning,
 			playerStats: playerStats
 		};
+		loadPlayerStats(gameSetup);
 		console.log('Výchozí stav hry:', gameSetup);	// Zobrazení výchozího nastavení hry v konzoli (pro vývoj)
 
 		startGame(gameSetup);	// Spuštění hry s výchozím nastavením
@@ -248,12 +251,37 @@ function gameOver() {
 		playerScoreBestDisplay.textContent = gameSetup.playerStats.playerScoreBest;
 	}
 
+	savePlayerStats();
+
 	console.log("Konečný stav hry:", gameSetup)
 }
 
-/*
-	Pro mobil
-*/
+function savePlayerStats() {
+	// Destrukturalizace objektu playerStats a vynechání vlastnosti playerScore
+	const { playerScore, ...filteredPlayerStats } = gameSetup.playerStats;
+	const saveLocalStorage = JSON.stringify(filteredPlayerStats);
+
+	localStorage.setItem('playerStats', saveLocalStorage);
+}
+
+function loadPlayerStats(gameSetup) {
+	const playerStatsJson = localStorage.getItem('playerStats');
+	const loadedPlayerStats = JSON.parse(playerStatsJson);
+
+	gameSetup.playerStats = {
+		...gameSetup.playerStats,
+		...loadedPlayerStats
+	};
+
+	playerScoreBestDisplay.textContent = gameSetup.playerStats.playerScoreBest;
+	failedArrowsDisplay.textContent = gameSetup.playerStats.failedArrows;
+	successArrowsDisplay.textContent = gameSetup.playerStats.successArrows;
+	completeStratagemsDisplay.textContent = gameSetup.playerStats.completeStratagems;
+}
+
+/**
+ *	Mobile control
+ */
 
 if (isMobileDevice) {
 	const mobileControlContainer = document.getElementById("mobileControl");
