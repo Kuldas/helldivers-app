@@ -76,6 +76,7 @@ fetch(stratagemsDataPath)
 	});
 
 function startGame(gameSetup) {
+
 	const randomStratagem = randChoice(gameSetup.stratagems);
 	gameSetup.currentStratagem = randomStratagem;
 
@@ -100,6 +101,7 @@ function startGame(gameSetup) {
 function startCountdown(duration) {
 
 	function updateProgress(timestamp) {
+
 		if (!countdownStartTime) countdownStartTime = timestamp;
 		var elapsedTime = timestamp - countdownStartTime;
 		var progressValue = Math.max(
@@ -109,8 +111,10 @@ function startCountdown(duration) {
 		progress.value = progressValue;
 
 		if (progressValue > 0) {
+
 			requestAnimationFrame(updateProgress);
 		} else {
+
 			gameOver();
 		}
 	}
@@ -125,6 +129,7 @@ function checkEventKey(event) {
 
 	// Pokud uživatel stiskl klávesu, zkontrolujeme, zda je to správná šipka
 	if (arrowKeys.includes(arrowPressed)) {
+
 		event.preventDefault();
 
 		checkArrow(arrowPressed, gameSetup.currentStratagem.activation_sequence);
@@ -132,10 +137,12 @@ function checkEventKey(event) {
 }
 
 function checkArrow(arrow, sequence) {
+
 	const currentArrow = sequence[arrowPositionIndex];
 	const currentListItem = document.getElementById('index-' + arrowPositionIndex);
 
 	if (arrow === currentArrow) {
+
 		arrowPositionIndex++; // Přesun na další šipku v sekvenci
 		gameSetup.playerStats.playerScore = gameSetup.playerStats.playerScore + arrowPoints;
 		gameSetup.playerStats.successArrows += 1;
@@ -148,6 +155,7 @@ function checkArrow(arrow, sequence) {
 		console.log('Správná šipka!');
 
 		if (arrowPositionIndex === sequence.length) {
+
 			countdownStartTime += seqBonusTime;
 			gameSetup.playerStats.playerScore = gameSetup.playerStats.playerScore + seqPoints;
 			gameSetup.playerStats.completeStratagems += 1;
@@ -163,11 +171,13 @@ function checkArrow(arrow, sequence) {
 		}
 
 		if (!gameSetup.isGameRunning) {
+
 			startCountdown(countdownDuration);
 			gameSetup.isGameRunning = true;
 		}
 
 	} else {
+
 		stratagenSeq.classList.add("animate__headShake");
 		gameSetup.playerStats.failedArrows += 1;
 
@@ -178,6 +188,7 @@ function checkArrow(arrow, sequence) {
 
 		// Po určité době (500ms) se odeberte třída "animate__headShake", aby se animace mohla opakovat
 		setTimeout(function () {
+
 			stratagenSeq.classList.remove('animate__headShake');
 		}, 500);
 
@@ -186,6 +197,7 @@ function checkArrow(arrow, sequence) {
 }
 
 function changeStratagem() {
+
 	let randomStratagem;
 
 	do {
@@ -210,6 +222,7 @@ function changeStratagem() {
 }
 
 function randChoice(arr) {
+
 	return arr[Math.floor(Math.random() * arr.length)];
 }
 
@@ -222,6 +235,7 @@ function gameRestart() {
 }
 
 function resetGameSetup() {
+
 	gameSetup.currentStratagem = [];
 	gameSetup.isGameRunning = false;
 	gameSetup.playerStats.playerScore = 0;
@@ -231,6 +245,7 @@ function resetGameSetup() {
 }
 
 function gameOver() {
+
 	const listItem = document.createElement('li');
 	const restartButton = document.createElement('button');
 
@@ -257,6 +272,7 @@ function gameOver() {
 }
 
 function savePlayerStats() {
+
 	// Destrukturalizace objektu playerStats a vynechání vlastnosti playerScore
 	const { playerScore, ...filteredPlayerStats } = gameSetup.playerStats;
 	const saveLocalStorage = JSON.stringify(filteredPlayerStats);
@@ -265,6 +281,7 @@ function savePlayerStats() {
 }
 
 function loadPlayerStats(gameSetup) {
+
 	const playerStatsJson = localStorage.getItem('playerStats');
 	const loadedPlayerStats = JSON.parse(playerStatsJson);
 
@@ -284,6 +301,7 @@ function loadPlayerStats(gameSetup) {
  */
 
 if (isMobileDevice) {
+
 	const mobileControlContainer = document.getElementById("mobileControl");
 	const mobileControl = document.querySelectorAll('.kbd');
 
@@ -295,7 +313,9 @@ if (isMobileDevice) {
 			checkEventKey(event);
 		});
 	});
+
 	console.log("Uživatel používá mobilní zařízení.");
 } else {
+
 	console.log("Uživatel používá počítač.");
 }
