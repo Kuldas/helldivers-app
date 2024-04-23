@@ -8,16 +8,16 @@ import { version } from './package.json';				// Import verze hry
 /**
  *	Promněné 
  */
-const stratagemsDataPath = './data/stratagems.json';					// Cesta ke Stratagem datům
-const gameVersionDisplay = document.getElementById('game-version');		// Získání elementu pro verzi hry
-const stratagenName = document.getElementById('stratagem-name');		// Získání elementu pro jméno stratagemu
-const stratagenSeq = document.getElementById('stratagem-seq');			// Získání elementu pro aktivační sekvenci stratagemu
-const failedArrowsDisplay = document.getElementById('failedArrows')		// Získání elementu pro neúspěšně zmáčknuté šipky
-const successArrowsDisplay = document.getElementById('successArrows')	// Získání elementu pro úspěšně zmáčknuté šipky
+const stratagemsDataPath = './data/stratagems.json';							// Cesta ke Stratagem datům
+const gameVersionDisplay = document.getElementById('game-version');				// Získání elementu pro verzi hry
+const stratagenName = document.getElementById('stratagem-name');				// Získání elementu pro jméno stratagemu
+const stratagenSeq = document.getElementById('stratagem-seq');					// Získání elementu pro aktivační sekvenci stratagemu
+const failedArrowsDisplay = document.getElementById('failedArrows')				// Získání elementu pro neúspěšně zmáčknuté šipky
+const successArrowsDisplay = document.getElementById('successArrows')			// Získání elementu pro úspěšně zmáčknuté šipky
 const completeStratagemsDisplay = document.getElementById('completeStratagems')	// Získání elementu pro úspěšné zavolané stratagemy
-const playerScoreDisplay = document.getElementById('player-score');		// Získání elementu pro skóre hráče
-const playerScoreBestDisplay = document.getElementById('player-best');	// Získání elementu pro nejlepší skóre hráče
-const progress = document.getElementById("countdown");					// Získání elementu countdown
+const playerScoreDisplay = document.getElementById('player-score');				// Získání elementu pro skóre hráče
+const playerScoreBestDisplay = document.getElementById('player-best');			// Získání elementu pro nejlepší skóre hráče
+const progress = document.getElementById("countdown");							// Získání elementu countdown
 const isMobileDevice = /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);	// Promněná, která kontroluje zda je uživatel na mobilu
 
 /**
