@@ -51,12 +51,14 @@ gameVersionDisplay.textContent = "v" + version;
 // Získání dat z JSON a přidání do gameSetup
 fetch(stratagemsDataPath)
 	.then((response) => {
+
 		if (!response.ok) {
 			throw new Error('Načítání dat selhalo');
 		}
 		return response.json();
 	})
 	.then((data) => {
+
 		const stratagemsData = data;
 		console.log('Data z JSON:', stratagemsData);	// Zobrazení dat v konzoli (pro vývoj)
 
@@ -66,12 +68,14 @@ fetch(stratagemsDataPath)
 			isGameRunning,
 			playerStats: playerStats
 		};
+
 		loadPlayerStats(gameSetup);
 		console.log('Výchozí stav hry:', gameSetup);	// Zobrazení výchozího nastavení hry v konzoli (pro vývoj)
 
 		startGame(gameSetup);	// Spuštění hry s výchozím nastavením
 	})
 	.catch((error) => {
+
 		console.error('Chyba při načítání dat:', error);	// Odchycení chyby při načítání dat
 	});
 
