@@ -18,72 +18,82 @@
 			<a href="/" class="btn btn-ghost no-animation text-xl">StratHell App</a>
 		</div>
 		<div class="flex-none gap-4">
+			<ul class="menu menu-sm hidden sm:menu-horizontal bg-base-200 rounded-box">
+				<li>
+					<a href="/">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="w-4 h-4 fill-current">
+							<path
+								d="M247.44,173.75a.68.68,0,0,0,0-.14L231.05,89.44c0-.06,0-.12,0-.18A60.08,60.08,0,0,0,172,40H83.89a59.88,59.88,0,0,0-59,49.52L8.58,173.61a.68.68,0,0,0,0,.14,36,36,0,0,0,60.9,31.71l.35-.37L109.52,160h37l39.71,45.09c.11.13.23.25.35.37A36.08,36.08,0,0,0,212,216a36,36,0,0,0,35.43-42.25ZM104,112H96v8a8,8,0,0,1-16,0v-8H72a8,8,0,0,1,0-16h8V88a8,8,0,0,1,16,0v8h8a8,8,0,0,1,0,16Zm40-8a8,8,0,0,1,8-8h24a8,8,0,0,1,0,16H152A8,8,0,0,1,144,104Zm84.37,87.47a19.84,19.84,0,0,1-12.9,8.23A20.09,20.09,0,0,1,198,194.31L167.8,160H172a60,60,0,0,0,51-28.38l8.74,45A19.82,19.82,0,0,1,228.37,191.47Z">
+							</path>
+						</svg>
+						Hrát
+					</a>
+				</li>
+				<li>
+					<a href="/leaderboard/" class="active">
+						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="w-4 h-4 fill-current">
+							<path
+								d="M240,200h-8V144a16,16,0,0,0-16-16H176V56a16,16,0,0,0-16-16H96A16,16,0,0,0,80,56V88H40a16,16,0,0,0-16,16v96H16a8,8,0,0,0,0,16H240a8,8,0,0,0,0-16ZM80,200H40V104H80Zm60-64a8,8,0,0,1-16,0V107.1l-1.47.49a8,8,0,0,1-5.06-15.18l12-4A8,8,0,0,1,140,96Zm76,64H176V144h40Z">
+							</path>
+						</svg>
+						Žebříček
+					</a>
+				</li>
+			</ul>
 			<a href="/changelog" id="game-version" class="text-xs link link-hover"></a>
-			<div class="dropdown dropdown-end">
-				<div tabindex="0" role="button" class="btn btn-sm btn-neutral m-1">
-					frakce
-					<svg width="12px" height="12px" class="h-2 w-2 fill-current opacity-60 inline-block"
-						xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048">
-						<path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
-					</svg>
-				</div>
-				<ul tabindex="0"
-					class="dropdown-content z-[1] p-2 shadow-2xl bg-neutral text-neutral-content rounded-box w-52">
-					<li><input type="radio" name="theme-dropdown"
-							class="theme-controller btn btn-sm btn-block btn-ghost justify-start"
-							aria-label="Helldivers" value="default" checked /></li>
-					<li><input type="radio" name="theme-dropdown"
-							class="theme-controller btn btn-sm btn-block btn-ghost justify-start" aria-label="Terminids"
-							value="stratHellTerminids" /></li>
-					<li><input type="radio" name="theme-dropdown"
-							class="theme-controller btn btn-sm btn-block btn-ghost justify-start"
-							aria-label="Automatons" value="stratHellAutomatons" /></li>
-				</ul>
-			</div>
 		</div>
 	</header>
 	<main class="space-y-20 py-16 grow bg-image">
-		
+
 		<section class="container grid justify-items-center gap-8">
 			<h1 class="text-4xl uppercase font-bold text-center">Galactic War</h1>
+
+			<div role="alert" class="alert alert-error max-w-md">
+				<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
+					viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+						d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+				</svg>
+				<span>Online žebříček nefunguje!</span>
+			</div>
 
 			<article class="card card-compact w-full max-w-md bg-neutral text-neutral-content">
 				<div class="card-body">
 					<h3 class="card-title justify-center">Leaderboard</h3>
 					<div class="overflow-x-auto">
-                        <table class="table table-lg">
-                          <!-- head -->
-                          <thead>
-                            <tr>
-                              <th>#</th>
-                              <th>Helldiver</th>
-                              <th>Skóre</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <!-- row 1 -->
-                            <tr>
-                              <th>1</th>
-                              <td>Kuldas</td>
-                              <td>1150</td>
-                            </tr>
-                            <!-- row 2 -->
-                            <tr>
-                              <th>2</th>
-                              <td>Dafko</td>
-                              <td>830</td>
-                            </tr>
-                            <!-- row 3 -->
-                            <tr>
-                              <th>3</th>
-                              <td>Yablko</td>
-                              <td>15</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
+						<table class="table table-lg">
+							<!-- head -->
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Helldiver</th>
+									<th>Skóre</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- row 1 -->
+								<tr>
+									<th>1</th>
+									<td>Kuldas</td>
+									<td>1150</td>
+								</tr>
+								<!-- row 2 -->
+								<tr>
+									<th>2</th>
+									<td>Dafko</td>
+									<td>830</td>
+								</tr>
+								<!-- row 3 -->
+								<tr>
+									<th>3</th>
+									<td>Yablko</td>
+									<td>15</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 					<aside class="card-actions justify-end">
-                        <p class="text-xs text-right">aktualizováno před 1h</p>
+						<p class="text-xs text-right">aktualizováno před 1h</p>
 					</aside>
 				</div>
 			</article>
