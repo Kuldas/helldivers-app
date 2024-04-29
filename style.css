@@ -71,7 +71,20 @@
 }
 .stat-desc {
     @apply whitespace-normal col-span-2
+} 
+.table {
+	word-wrap: break-word;
 }
+.table tbody tr:nth-child(1) th:nth-child(1) {
+	color: #FFD700;
+}
+.table tbody tr:nth-child(2) th:nth-child(1) {
+	color: #C0C0C0;
+}
+.table tbody tr:nth-child(3) th:nth-child(1) {
+	color: #CD7F32;
+}
+
 .scroll-lock {
     overflow: hidden;
 }
