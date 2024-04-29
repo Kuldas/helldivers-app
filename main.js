@@ -11,8 +11,8 @@ import { version } from './package.json';				// Import verze hry
  */
 const stratagemsDataPath = './data/stratagems.json';							// Cesta ke Stratagem datům
 const gameVersionDisplay = document.getElementById('game-version');				// Získání elementu pro verzi hry
-const stratagenName = document.getElementById('stratagem-name');				// Získání elementu pro jméno stratagemu
-const stratagenSeq = document.getElementById('stratagem-seq');					// Získání elementu pro aktivační sekvenci stratagemu
+const stratagemName = document.getElementById('stratagem-name');				// Získání elementu pro jméno stratagemu
+const stratagemSeq = document.getElementById('stratagem-seq');					// Získání elementu pro aktivační sekvenci stratagemu
 const failedArrowsDisplay = document.getElementById('failedArrows');			// Získání elementu pro neúspěšně zmáčknuté šipky
 const successArrowsDisplay = document.getElementById('successArrows')			// Získání elementu pro úspěšně zmáčknuté šipky
 const completeStratagemsDisplay = document.getElementById('completeStratagems')	// Získání elementu pro úspěšné zavolané stratagemy
@@ -85,16 +85,16 @@ function startGame(gameSetup) {
 	const randomStratagem = randChoice(gameSetup.stratagems);
 	gameSetup.currentStratagem = randomStratagem;
 
-	stratagenName.textContent = gameSetup.currentStratagem.name;
+	stratagemName.textContent = gameSetup.currentStratagem.name;
 
-	stratagenSeq.innerHTML = ''; // Vyprázdnění seznamu před přidáním nových šipek
+	stratagemSeq.innerHTML = '';	// Vyprázdnění seznamu před přidáním nových šipek
 
 	gameSetup.currentStratagem.activation_sequence.forEach((arrow, index) => {
 		let listItem = document.createElement('li');
 
 		listItem.innerHTML = arrowIcon(arrow);
 		listItem.setAttribute('id', 'index-' + index);
-		stratagenSeq.appendChild(listItem);
+		stratagemSeq.appendChild(listItem);
 	});
 
 	playerScoreDisplay.textContent = gameSetup.playerStats.playerScore;
@@ -181,7 +181,7 @@ function checkArrow(arrow, sequence) {
 
 	} else {
 
-		stratagenSeq.classList.add("animate__headShake");
+		stratagemSeq.classList.add("animate__headShake");
 		gameSetup.playerStats.failedArrows += 1;
 
 		if (gameSetup.playerStats.playerScore > 0) gameSetup.playerStats.playerScore = gameSetup.playerStats.playerScore - arrowPoints;
@@ -190,8 +190,8 @@ function checkArrow(arrow, sequence) {
 		failedArrowsDisplay.textContent = gameSetup.playerStats.failedArrows;
 
 		// Po dokončení animace se odeberte třída "animate__headShake", aby se animace mohla opakovat
-		stratagenSeq.addEventListener('animationend', () => {
-			stratagenSeq.classList.remove('animate__headShake');
+		stratagemSeq.addEventListener('animationend', () => {
+			stratagemSeq.classList.remove('animate__headShake');
 		});
 	}
 }
@@ -206,39 +206,21 @@ function changeStratagem() {
 
 	gameSetup.currentStratagem = randomStratagem;
 
-	stratagenName.textContent = gameSetup.currentStratagem.name;
+	stratagemName.textContent = gameSetup.currentStratagem.name;
 
-	stratagenSeq.innerHTML = ''; // Vyprázdnění seznamu před přidáním nových šipek
+	stratagemSeq.innerHTML = ''; // Vyprázdnění seznamu před přidáním nových šipek
 
 	gameSetup.currentStratagem.activation_sequence.forEach((arrow, index) => {
 		let listItem = document.createElement('li');
 		listItem.innerHTML = arrowIcon(arrow);
 		listItem.setAttribute('id', 'index-' + index);
-		stratagenSeq.appendChild(listItem);
+		stratagemSeq.appendChild(listItem);
 	});
 }
 
 function randChoice(arr) {
 
 	return arr[Math.floor(Math.random() * arr.length)];
-}
-
-function gameRestart() {
-
-	resetGameSetup();
-	startGame(gameSetup);
-
-	console.log("Stav hry po resetu:", gameSetup)
-}
-
-function resetGameSetup() {
-
-	gameSetup.currentStratagem = [];
-	gameSetup.isGameRunning = false;
-	gameSetup.playerStats.playerScore = 0;
-	arrowPositionIndex = 0;
-	progress.value = "10";
-	countdownStartTime = null;
 }
 
 function gameOver() {
@@ -249,14 +231,14 @@ function gameOver() {
 	// Odstraní existující event listener, pokud existuje
 	document.removeEventListener('keydown', checkEventKey);
 
-	stratagenName.textContent = "Konec hry";
+	stratagemName.textContent = "Konec hry";
 
-	stratagenSeq.innerHTML = ''; // Vyprázdnění seznamu
+	stratagemSeq.innerHTML = ''; // Vyprázdnění seznamu
 	restartButton.classList.add("btn", "btn-sm", "btn-primary", "btn-outline");
 	restartButton.textContent = 'Restart';
 	restartButton.addEventListener('click', gameRestart);
 	listItem.appendChild(restartButton)
-	stratagenSeq.appendChild(listItem);
+	stratagemSeq.appendChild(listItem);
 
 	if (gameSetup.playerStats.playerScore > gameSetup.playerStats.playerScoreBest) {
 		gameSetup.playerStats.playerScoreBest = gameSetup.playerStats.playerScore;
@@ -264,8 +246,22 @@ function gameOver() {
 	}
 
 	savePlayerStats();
+}
 
-	console.log("Konečný stav hry:", gameSetup)
+function gameRestart() {
+
+	resetGameSetup();
+	startGame(gameSetup);
+}
+
+function resetGameSetup() {
+
+	gameSetup.currentStratagem = [];
+	gameSetup.isGameRunning = false;
+	gameSetup.playerStats.playerScore = 0;
+	arrowPositionIndex = 0;
+	progress.value = "10";
+	countdownStartTime = null;
 }
 
 function savePlayerStats() {
@@ -294,18 +290,21 @@ function loadPlayerStats(gameSetup) {
 }
 
 submitScoreBest.addEventListener('click', async function (event) {
+
 	event.preventDefault();
 
 	const playerNameInput = document.querySelector('input[name=playerName]');
 	const playerNameLabel = document.getElementById("playerNameLabel");
 
 	if (!playerNameInput.value) {
+
 		playerNameLabel.classList.add("animate__headShake", "border-error");
 
 		playerNameLabel.addEventListener('animationend', () => {
 			playerNameLabel.classList.remove("animate__headShake", "border-error");
 		});
 	} else {
+
 		addToLeaderboard(playerNameInput.value, gameSetup.playerStats.playerScoreBest)
 			.then(data => {
 				if (data) {
