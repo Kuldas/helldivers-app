@@ -18,7 +18,7 @@
 			<a href="/" class="btn btn-ghost no-animation text-xl">StratHell App</a>
 		</div>
 		<div class="flex-none gap-4">
-			<ul class="menu menu-sm hidden sm:menu-horizontal bg-base-200 rounded-box">
+			<ul class="menu hidden sm:menu-horizontal bg-base-200 rounded-box">
 				<li>
 					<a href="/">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="w-4 h-4 fill-current">
@@ -36,11 +36,10 @@
 								d="M240,200h-8V144a16,16,0,0,0-16-16H176V56a16,16,0,0,0-16-16H96A16,16,0,0,0,80,56V88H40a16,16,0,0,0-16,16v96H16a8,8,0,0,0,0,16H240a8,8,0,0,0,0-16ZM80,200H40V104H80Zm60-64a8,8,0,0,1-16,0V107.1l-1.47.49a8,8,0,0,1-5.06-15.18l12-4A8,8,0,0,1,140,96Zm76,64H176V144h40Z">
 							</path>
 						</svg>
-						Žebříček
+						Galaktická válka
 					</a>
 				</li>
 			</ul>
-			<a href="/changelog" id="game-version" class="text-xs link link-hover"></a>
 		</div>
 	</header>
 	<main class="space-y-20 py-16 grow bg-image">
@@ -48,81 +47,65 @@
 		<section class="container grid justify-items-center gap-8">
 			<h1 class="text-4xl uppercase font-bold text-center">Galactic War</h1>
 
-			<div role="alert" class="alert alert-error max-w-md">
-				<svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
-					viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-						d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-				</svg>
-				<span>Online žebříček nefunguje!</span>
-			</div>
-
 			<article class="card card-compact w-full max-w-md bg-neutral text-neutral-content">
 				<div class="card-body">
-					<h3 class="card-title justify-center">Leaderboard</h3>
+					<h3 class="card-title justify-center">Leaderboard / TOP 20</h3>
 					<div class="overflow-x-auto">
-						<table class="table table-lg">
+						<table class="table table-md md:table-lg">
 							<!-- head -->
 							<thead>
 								<tr>
-									<th>#</th>
+									<th></th>
 									<th>Helldiver</th>
 									<th>Skóre</th>
 								</tr>
 							</thead>
 							<tbody>
-								<!-- row 1 -->
-								<tr>
-									<th>1</th>
-									<td>Kuldas</td>
-									<td>1150</td>
-								</tr>
-								<!-- row 2 -->
-								<tr>
-									<th>2</th>
-									<td>Dafko</td>
-									<td>830</td>
-								</tr>
-								<!-- row 3 -->
-								<tr>
-									<th>3</th>
-									<td>Yablko</td>
-									<td>15</td>
-								</tr>
+								<!-- data ze Supabase -->
 							</tbody>
 						</table>
 					</div>
-					<aside class="card-actions justify-end">
-						<p class="text-xs text-right">aktualizováno před 1h</p>
-					</aside>
 				</div>
 			</article>
 
 		</section>
 	</main>
-	<footer class="footer items-center p-4 bg-neutral text-neutral-content">
-		<aside class="items-center grid-flow-col">
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 258.965" width="250" height="258.965"
-				class="fill-current w-6 h-6">
-				<path
-					d="m124.998 0 98.824 32.909a2.685 2.685 0 0 1 1.832 2.73l-6.524 96.514a2.685 2.685 0 0 0 0.765 2.065l29.331 29.825a2.686 2.686 0 0 1 0.146 3.606l-39.454 47.217a2.685 2.685 0 0 1 -3.075 0.765l-23.235 -9.474a2.685 2.685 0 0 0 -2.174 0.065 2.685 2.685 0 0 0 -1.413 1.654l-10.883 36.397a2.685 2.685 0 0 1 -1.784 1.798l-41.565 12.774a2.694 2.694 0 0 1 -1.578 0l-41.565 -12.774a2.685 2.685 0 0 1 -1.784 -1.798l-10.883 -36.398a2.685 2.685 0 0 0 -1.413 -1.654 2.685 2.685 0 0 0 -2.174 -0.064l-23.235 9.474a2.685 2.685 0 0 1 -3.076 -0.765L0.625 167.649a2.686 2.686 0 0 1 0.146 -3.606l29.331 -29.825a2.685 2.685 0 0 0 0.765 -2.065L24.343 35.638a2.685 2.685 0 0 1 1.832 -2.73zm-1.143 178.731 -14.833 21.671a2.011 2.011 0 0 0 0.421 2.72l5.465 4.271a2.011 2.011 0 0 0 2.721 -0.225l6.676 -7.282a0.94 0.94 0 0 1 1.386 0l6.676 7.282a2.011 2.011 0 0 0 2.721 0.225l5.465 -4.271a2.011 2.011 0 0 0 0.421 -2.72l-14.833 -21.671a1.384 1.384 0 0 0 -2.286 0M179.671 124.434c-14.401 0 -26.092 11.691 -26.092 26.093s11.691 26.093 26.092 26.093c14.401 0 26.093 -11.692 26.093 -26.093s-11.691 -26.093 -26.093 -26.093m-109.346 0c-14.401 0 -26.093 11.691 -26.093 26.093s11.692 26.093 26.093 26.093 26.093 -11.692 26.093 -26.093 -11.691 -26.093 -26.093 -26.093" />
-			</svg>
-			<p>Kuldas - 2024 - made with love for democracy ✊</p>
-		</aside>
-		<nav class="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
-			<a href="https://discord.gg/Ap44TA92kf" target="_blank"
-				class="link link-hover inline-flex items-center gap-1 text-xs">
-				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256"
-					class="fill-current">
-					<path
-						d="M247.51,174.39,218,58a16.08,16.08,0,0,0-13-11.88l-36.06-5.92a16.22,16.22,0,0,0-18.26,11.88l-.21.85a4,4,0,0,0,3.27,4.93,155.62,155.62,0,0,1,24.41,5.62,8.2,8.2,0,0,1,5.62,9.7,8,8,0,0,1-10.19,5.64,155.4,155.4,0,0,0-90.8-.1,8.22,8.22,0,0,1-10.28-4.81,8,8,0,0,1,5.08-10.33,156.85,156.85,0,0,1,24.72-5.72,4,4,0,0,0,3.27-4.93l-.21-.85A16.21,16.21,0,0,0,87.08,40.21L51,46.13A16.08,16.08,0,0,0,38,58L8.49,174.39a15.94,15.94,0,0,0,9.06,18.51l67,29.71a16.17,16.17,0,0,0,21.71-9.1l3.49-9.45a4,4,0,0,0-3.27-5.35,158.13,158.13,0,0,1-28.63-6.2,8.2,8.2,0,0,1-5.61-9.67,8,8,0,0,1,10.2-5.66,155.59,155.59,0,0,0,91.12,0,8,8,0,0,1,10.19,5.65,8.19,8.19,0,0,1-5.61,9.68,157.84,157.84,0,0,1-28.62,6.2,4,4,0,0,0-3.27,5.35l3.49,9.45a16.18,16.18,0,0,0,21.71,9.1l67-29.71A15.94,15.94,0,0,0,247.51,174.39ZM92,152a12,12,0,1,1,12-12A12,12,0,0,1,92,152Zm72,0a12,12,0,1,1,12-12A12,12,0,0,1,164,152Z">
-					</path>
-				</svg>
-				Discord CZ/SK
-			</a>
+	<footer class="footer footer-center p-10 bg-neutral text-neutral-content">
+		<nav class="grid grid-flow-col gap-4">
+			<a class="link link-hover">O hře</a>
+			<a class="link link-hover">Autor</a>
+			<a class="link link-hover">Roadmap</a>
 		</nav>
+		<nav>
+			<div class="grid grid-flow-col gap-4">
+				<a href="https://discord.gg/Ap44TA92kf" target="_blank"
+					class="link link-hover flex flex-col items-center gap-1 text-xs">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256"
+						class="fill-current">
+						<path
+							d="M247.51,174.39,218,58a16.08,16.08,0,0,0-13-11.88l-36.06-5.92a16.22,16.22,0,0,0-18.26,11.88l-.21.85a4,4,0,0,0,3.27,4.93,155.62,155.62,0,0,1,24.41,5.62,8.2,8.2,0,0,1,5.62,9.7,8,8,0,0,1-10.19,5.64,155.4,155.4,0,0,0-90.8-.1,8.22,8.22,0,0,1-10.28-4.81,8,8,0,0,1,5.08-10.33,156.85,156.85,0,0,1,24.72-5.72,4,4,0,0,0,3.27-4.93l-.21-.85A16.21,16.21,0,0,0,87.08,40.21L51,46.13A16.08,16.08,0,0,0,38,58L8.49,174.39a15.94,15.94,0,0,0,9.06,18.51l67,29.71a16.17,16.17,0,0,0,21.71-9.1l3.49-9.45a4,4,0,0,0-3.27-5.35,158.13,158.13,0,0,1-28.63-6.2,8.2,8.2,0,0,1-5.61-9.67,8,8,0,0,1,10.2-5.66,155.59,155.59,0,0,0,91.12,0,8,8,0,0,1,10.19,5.65,8.19,8.19,0,0,1-5.61,9.68,157.84,157.84,0,0,1-28.62,6.2,4,4,0,0,0-3.27,5.35l3.49,9.45a16.18,16.18,0,0,0,21.71,9.1l67-29.71A15.94,15.94,0,0,0,247.51,174.39ZM92,152a12,12,0,1,1,12-12A12,12,0,0,1,92,152Zm72,0a12,12,0,1,1,12-12A12,12,0,0,1,164,152Z">
+						</path>
+					</svg>
+					Discord CZ/SK
+				</a>
+				<a href="https://discord.com/invite/helldivers" target="_blank"
+					class="link link-hover flex flex-col items-center gap-1 text-xs">
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 256 256"
+						class="fill-current">
+						<path
+							d="M247.51,174.39,218,58a16.08,16.08,0,0,0-13-11.88l-36.06-5.92a16.22,16.22,0,0,0-18.26,11.88l-.21.85a4,4,0,0,0,3.27,4.93,155.62,155.62,0,0,1,24.41,5.62,8.2,8.2,0,0,1,5.62,9.7,8,8,0,0,1-10.19,5.64,155.4,155.4,0,0,0-90.8-.1,8.22,8.22,0,0,1-10.28-4.81,8,8,0,0,1,5.08-10.33,156.85,156.85,0,0,1,24.72-5.72,4,4,0,0,0,3.27-4.93l-.21-.85A16.21,16.21,0,0,0,87.08,40.21L51,46.13A16.08,16.08,0,0,0,38,58L8.49,174.39a15.94,15.94,0,0,0,9.06,18.51l67,29.71a16.17,16.17,0,0,0,21.71-9.1l3.49-9.45a4,4,0,0,0-3.27-5.35,158.13,158.13,0,0,1-28.63-6.2,8.2,8.2,0,0,1-5.61-9.67,8,8,0,0,1,10.2-5.66,155.59,155.59,0,0,0,91.12,0,8,8,0,0,1,10.19,5.65,8.19,8.19,0,0,1-5.61,9.68,157.84,157.84,0,0,1-28.62,6.2,4,4,0,0,0-3.27,5.35l3.49,9.45a16.18,16.18,0,0,0,21.71,9.1l67-29.71A15.94,15.94,0,0,0,247.51,174.39ZM92,152a12,12,0,1,1,12-12A12,12,0,0,1,92,152Zm72,0a12,12,0,1,1,12-12A12,12,0,0,1,164,152Z">
+						</path>
+					</svg>
+					Oficiální Discord
+				</a>
+			</div>
+		</nav>
+		<aside>
+			<p>Kuldas - 2024 - made with love for democracy ✊</p>
+			<p id="game-version"></p>
+		</aside>
 	</footer>
-	<script type="module" src="/main.js"></script>
+	<script type="module" src="/leaderboard.js"></script>
 </body>
 
 </html>
