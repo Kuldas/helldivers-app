@@ -38,7 +38,7 @@ let countdownStartTime = null;	// Výchozí čas spuštění countdownu
 let countdownDuration = 15000;	// aktuálně: 15sec - Výchozí čas pro countdown (v ms)
 let seqBonusTime = 1500;		// aktuálně: 1,5sec - Bonusový čas za splněnou sekvenci (v ms)
 let arrowPoints = 3;			// Počet bodů za správnou šipku v sekvenci
-let seqPoints = 8;				// Počet bodů za dokončení sekvence stratagemu
+let seqPoints = 5;				// Počet bodů za dokončení sekvence stratagemu
 let isGameRunning = false;		// Indikátor, zda byla hra spuštěna
 
 
@@ -161,7 +161,7 @@ function checkArrow(arrow, sequence) {
 		if (arrowPositionIndex === sequence.length) {
 
 			countdownStartTime += seqBonusTime;
-			gameSetup.playerStats.playerScore = gameSetup.playerStats.playerScore + seqPoints;
+			gameSetup.playerStats.playerScore = gameSetup.playerStats.playerScore + (seqPoints * sequence.length);
 			gameSetup.playerStats.completeStratagems += 1;
 
 			playerScoreDisplay.textContent = gameSetup.playerStats.playerScore;
@@ -184,7 +184,9 @@ function checkArrow(arrow, sequence) {
 		stratagemSeq.classList.add("animate__headShake");
 		gameSetup.playerStats.failedArrows += 1;
 
-		if (gameSetup.playerStats.playerScore > 0) gameSetup.playerStats.playerScore = gameSetup.playerStats.playerScore - arrowPoints;
+		if (gameSetup.playerStats.playerScore > 0) {
+			gameSetup.playerStats.playerScore = Math.max(0, gameSetup.playerStats.playerScore - 2);
+		}
 
 		playerScoreDisplay.textContent = gameSetup.playerStats.playerScore;
 		failedArrowsDisplay.textContent = gameSetup.playerStats.failedArrows;
