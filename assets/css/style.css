@@ -25,7 +25,7 @@
         font-family: 'Changa';
         font-style: normal;
         font-weight: 700;
-        src: url('./assets/fonts/changa/changa-v27-latin_latin-ext-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+        src: url('../fonts/changa/changa-v27-latin_latin-ext-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
     }
 }
 
