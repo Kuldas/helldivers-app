@@ -1,10 +1,10 @@
 /**
  *	Importy
  */
-import './style.css';									// Import stylů
+import '../css/style.css';									// Import stylů
 import { addToLeaderboard } from './database.js';		// Import db
-import { arrowIcon } from './assets/js/functions.js';	// Import funkce/í
-import { version } from './package.json';				// Import verze hry
+import { arrowIcon } from './arrow-icons.js';	// Import funkce/í
+import { version } from '../../package.json';				// Import verze hry
 
 /**
  *	Promněné 
@@ -236,7 +236,7 @@ function gameOver() {
 	stratagemName.textContent = "Konec hry";
 
 	stratagemSeq.innerHTML = ''; // Vyprázdnění seznamu
-	restartButton.classList.add("btn", "btn-sm", "btn-primary", "btn-outline");
+	restartButton.classList.add("btn", "btn-sm", "btn-primary");
 	restartButton.textContent = 'Restart';
 	restartButton.addEventListener('click', gameRestart);
 	listItem.appendChild(restartButton)

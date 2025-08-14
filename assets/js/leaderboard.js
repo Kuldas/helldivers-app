@@ -1,8 +1,8 @@
 /**
  *	Importy
  */
-import './style.css';									// Import stylů
-import { version } from './package.json';				// Import verze hry
+import '../css/style.css';									// Import stylů
+import { version } from '../../package.json';				// Import verze hry
 import * as db from './database.js';
 
 /**
