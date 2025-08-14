@@ -314,7 +314,7 @@ submitScoreBest.addEventListener('click', async function (event) {
 					successSubmitPlayerScore.classList.toggle("hidden");
 					setTimeout(function () {
 						successSubmitPlayerScore.classList.toggle("hidden");
-					}, 2000);
+					}, 5000);
 				}
 			});
 	}
