@@ -47,6 +47,10 @@
 	@apply grid-flow-row
 }
 
+.input {
+    @apply bg-neutral
+}
+
 @media screen(sm){
 	.stats-4 {
 		grid-template-columns: repeat(4, 1fr);

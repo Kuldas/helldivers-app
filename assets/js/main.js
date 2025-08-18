@@ -300,10 +300,10 @@ submitScoreBest.addEventListener('click', async function (event) {
 
 	if (!playerNameInput.value) {
 
-		playerNameLabel.classList.add("animate__headShake", "border-error");
+		playerNameLabel.classList.add("animate__headShake", "input-error");
 
 		playerNameLabel.addEventListener('animationend', () => {
-			playerNameLabel.classList.remove("animate__headShake", "border-error");
+			playerNameLabel.classList.remove("animate__headShake", "input-error");
 		});
 	} else {
 
