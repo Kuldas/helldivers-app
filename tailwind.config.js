@@ -40,13 +40,22 @@ export default {
 					"primary": "#F6E10C",
 					"neutral": "#2a282d",
 					"base-300": "#3a3f4b",
-					"base-content": "#fff"
+					"base-content": "#fff",
+					"base-100": "#2a282d",
 				},
 				stratHellTerminids: {
 					"primary": "#d09b29",
+					"neutral": "#2a282d",
+					"base-300": "#3a3f4b",
+					"base-content": "#fff",
+					"base-100": "#2a282d",
 				},
 				stratHellAutomatons: {
 					"primary": "#8c1e1e",
+					"neutral": "#2a282d",
+					"base-300": "#3a3f4b",
+					"base-content": "#fff",
+					"base-100": "#2a282d",
 				},
 			}
 		],
