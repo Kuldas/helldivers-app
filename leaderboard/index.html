@@ -10,15 +10,16 @@
 		href="https://res.cloudinary.com/kuldas/image/upload/v1713185489/dev/helldivers/helldivers-wallpaper_i89xe9.jpg">
 	<!-- Animation library -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+	<script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
 </head>
 
 <body class="flex flex-col min-h-screen">
 	<header class="navbar px-4 bg-primary text-primary-content">
 		<div class="flex-1">
-			<a href="/" class="btn btn-ghost no-animation text-xl">StratHell App</a>
+			<a href="/" class="btn btn-ghost no-animation text-xl">StratHell</a>
 		</div>
 		<div class="flex-none gap-4">
-			<ul class="menu hidden gap-4 sm:menu-horizontal bg-base-200 rounded-box">
+			<ul class="menu hidden gap-4 sm:menu-horizontal rounded-box">
 				<li>
 					<a href="/">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="w-4 h-4 fill-current">
@@ -40,6 +41,13 @@
 					</a>
 				</li>
 			</ul>
+			<div>
+				<select data-choose-theme class="select select-bordered select-sm select-neutral text-neutral-content w-full max-w-xs">
+					<option value="stratHell">Helldivers</option>
+					<option value="stratHellTerminids">Terminids</option>
+					<option value="stratHellAutomatons">Automatons</option>
+				</select>
+			</div>
 			<div class="sm:hidden">
 				<details class="dropdown dropdown-end mobile-menu">
 					<summary class="btn btn-ghost"></summary>
@@ -71,7 +79,7 @@
 			</div>
 		</div>
 	</header>
-	<main class="space-y-20 py-16 grow bg-image">
+	<main class="grid gap-16 py-32 bg-image">
 
 		<section class="container grid justify-items-center gap-8">
 			<h1 class="text-4xl uppercase font-bold text-center">Galactic War</h1>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-theme lang="cs">
+<html lang="cs">
 
 <head>
 	<meta charset="UTF-8" />
@@ -10,12 +10,13 @@
 		href="https://res.cloudinary.com/kuldas/image/upload/v1713185489/dev/helldivers/helldivers-wallpaper_i89xe9.jpg">
 	<!-- Animation library -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+	<script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
 </head>
 
 <body class="flex flex-col min-h-screen">
 	<header class="navbar px-4 bg-primary text-primary-content">
 		<div class="flex-1">
-			<a href="/" class="btn btn-ghost no-animation text-xl">StratHell App</a>
+			<a href="/" class="btn btn-ghost no-animation text-xl">StratHell</a>
 		</div>
 		<div class="flex-none gap-4">
 			<ul class="menu hidden gap-4 sm:menu-horizontal rounded-box">
@@ -40,6 +41,13 @@
 					</a>
 				</li>
 			</ul>
+			<div>
+				<select data-choose-theme class="select select-bordered select-sm select-neutral text-neutral-content w-full max-w-xs">
+					<option value="stratHell">Helldivers</option>
+					<option value="stratHellTerminids">Terminids</option>
+					<option value="stratHellAutomatons">Automatons</option>
+				</select>
+			</div>
 			<div class="sm:hidden">
 				<details class="dropdown dropdown-end mobile-menu">
 					<summary class="btn btn-ghost"></summary>
@@ -71,7 +79,7 @@
 			</div>
 		</div>
 	</header>
-	<main class="space-y-20 py-16 grow bg-image">
+	<main class="grid gap-16 py-32 bg-image">
 		<section class="container grid justify-items-center gap-4">
 			<article class="text-center space-y-2 text-neutral-content">
 				<h1 class="text-4xl uppercase font-bold">Tréninkové centrum</h1>
@@ -202,7 +210,7 @@
 								</form>
 								<article class="w-full space-y-4">
 									<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-										class="w-16 h-16 fill-current mx-auto block">
+										class="w-32 h-32 fill-primary mx-auto block">
 										<path
 											d="M256.45 444.594a8.159 8.159 0 0 0 7.992-8.317c-.09-4.508-3.818-8.081-8.318-8-4.508.09-8.089 3.825-7.992 8.326.09 4.499 3.809 8.088 8.318 7.991zM256.844 464.174a8.154 8.154 0 0 0-7.991 8.317c.089 4.508 3.817 8.081 8.317 8 4.504-.098 8.089-3.825 7.992-8.326-.091-4.501-3.809-8.09-8.318-7.991z" />
 										<path
@@ -213,8 +221,8 @@
 										Vítej Helldivere,<br>je čas změřit síly s
 										ostatními a ukázat, že jsi připravený hrdě sloužit v zájmu nás všech!
 									</p>
-									<p>Vezmeme tvé největší nahrané skóre a zařadíme ho do tabulek. Ty pak následně
-										ukážou, kdo je tu <strong>Helldiver #1</strong> ✊ !</p>
+									<p>Vezmeme tvé <strong>nejlepší dosažené skóre</strong> (<span id="player-best" class="player-besttext-primary-content">-</span>) a vložíme do tabulek dle předpisů a nařízení. Tabulky se nemýlí a
+										ukážou, kdo je tu <strong>Helldiver #1</strong> ✊</p>
 									<blockquote class="text-center text-xl italic font-semibold">
 										<p>"Say hello to DEMOCRACY!”</p>
 									</blockquote>
