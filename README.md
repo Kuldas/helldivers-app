@@ -1,5 +1,9 @@
 # StratHell
-StratHell je jednoduchá hra inspirovaná minihrou v Helldivers 2, která je dostupná v prémiové edici "Super Citizen Edition".
+StratHell je jednoduchá hra inspirovaná minihrou v Helldivers 2, která je dostupná v prémiové edici **Super Citizen Edition**.
+
+- [PC verze](https://store.steampowered.com/bundle/33608/HELLDIVERS_2_Super_Citizen_Edition/)
+- [Xbox verze](https://www.xbox.com/cs-CZ/games/store/helldivers-2-super-citizen-edition/9P4H9CTBWV3G/0010)
+- [PlayStation verze](https://store.playstation.com/en-cz/product/EP9000-PPSA06016_00-HELLDIVERS2SCE00/)
 
 ## Herní funkce
 
